@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body,html{ 
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.fond{
+    background-color: #EEEEEE;
+}
+
+.footer{
+    background-color: #EEEEEE;
+    text-align: center;
+}
