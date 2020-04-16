@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 16 avr. 2020 à 21:58
+-- Généré le :  jeu. 16 avr. 2020 à 22:31
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `gretagram`
+-- Base de données :  `db_web`
 --
 CREATE DATABASE IF NOT EXISTS `db_web` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `db_web`;
@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `prenom` varchar(100) DEFAULT NULL,
   `dtN` date DEFAULT NULL,
   `mail` varchar(100) DEFAULT NULL,
-  `mdp` varchar(100) DEFAULT NULL
+  `mdp` varchar(100) DEFAULT NULL,
+  UNIQUE KEY `nomUtilisateur` (`nomUtilisateur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -64,11 +65,21 @@ INSERT INTO `personne` (`nomUtilisateur`, `nom`, `prenom`, `dtN`, `mail`, `mdp`)
 
 DROP TABLE IF EXISTS `publication`;
 CREATE TABLE IF NOT EXISTS `publication` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  nblike int(100),
   `titre` varchar(100) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `user` varchar(100) DEFAULT NULL,
-  `photo` varchar(100) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `photo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `publication`
+--
+
+INSERT INTO `publication` (`id`, `titre`, `description`, `user`, `photo`) VALUES
+(1, 'test1', 'l\'ecologie c\'est cool', 'Coby', 'img/tilleul-arbre.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
