@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 16 avr. 2020 à 22:31
+-- Généré le :  ven. 17 avr. 2020 à 17:58
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -66,20 +66,25 @@ INSERT INTO `personne` (`nomUtilisateur`, `nom`, `prenom`, `dtN`, `mail`, `mdp`)
 DROP TABLE IF EXISTS `publication`;
 CREATE TABLE IF NOT EXISTS `publication` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  nblike int(100),
+  `nblike` int(100) DEFAULT '0',
   `titre` varchar(100) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   `user` varchar(100) DEFAULT NULL,
   `photo` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `publication`
 --
 
-INSERT INTO `publication` (`id`, `titre`, `description`, `user`, `photo`) VALUES
-(1, 'test1', 'l\'ecologie c\'est cool', 'Coby', 'img/tilleul-arbre.jpg');
+INSERT INTO `publication` (`id`, `nblike`, `titre`, `description`, `user`, `photo`) VALUES
+(1, 0, 'test1', 'l\'ecologie c\'est cool', 'Coby', 'img/tilleul-arbre.jpg'),
+(6, 0, 'test3', 'test3', 'Coby', 'uploads/5e99c26c84375Forza456.jpg'),
+(9, 0, 'test', 'blabla', 'Coby', 'uploads/5e99c6296cb42Forza3.jpg'),
+(10, 0, 'dfssds', 'sdsdsd', 'Coby', 'uploads/5e99c65e15464Forza2.jpg'),
+(11, 0, 'test2', 'sdfds', 'Coby', 'uploads/5e99c690b3de6bmw.jpg'),
+(8, 0, 'bugatti', 'sd', 'Coby', 'uploads/5e99c56bdc058bugatti_chiron_super_sport_300__prototype_2019_4k_8k-HD.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

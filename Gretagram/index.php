@@ -45,6 +45,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="carte.php">Carte</a>
                 </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
@@ -56,57 +57,66 @@
     <br>
     <!--Post-->
     <div class="container">
+
+
+
         <?php
-        $requetePost = "Select * FROM personne";
-        $prequetePost = $conn->prepare($requetePost);
-        $prequetePost->execute();
-        while ($dataPost = $prequetePost->fetch()) {
 
-            $nom = $dataPost['nom'];
+$requetePost = "Select * FROM publication";
+$prequetePost = $conn->prepare($requetePost);
+$prequetePost->execute();
+while ($dataPost = $prequetePost->fetch()) {
 
-            echo '
+    $user = $dataPost['user'];
+    $titre = $dataPost['titre'];
+    $description = $dataPost['description'];
+    $nbLike = $dataPost['nblike'];
+    $image = $dataPost['photo'];
+
+    echo '
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6 fond">
+                <h5>' . $titre . ' by ' . $user . '  </h5>
+                
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                     </div>
-                    <div class="col-md-6 fond">
-                        <h3>' . $nom . '</h3>
+                    <div class="col-md-8">
                         <div class="row">
-                            <div class="col-md-2">
+                            <img src="'. $image .'" width="400">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <i class="fa fa-heart"></i>
                             </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <i class="fa fa-heart"></i>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <i class="fa fa-comment"></i>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <i class="fa fa-share"></i>
-                                    </div>
-                                    <div class="col-md-6">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a class="like">4 jaime</a>
-                                    </div>
-                                </div>
+                            <div class="col-md-1">
+                                <i class="fa fa-comment"> '. $description.' </i>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
+                                <i class="fa fa-share"></i>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-3">
+                                <a class="like">'. $nbLike .' jaime</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                     </div>
                 </div>
-                <br>
-            
-            ';
-        }
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <br>
+    
+    ';
+}
 
-        ?>
+?>
 
 
     </div>

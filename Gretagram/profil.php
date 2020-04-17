@@ -95,6 +95,7 @@
                 </div>
                 <br>
                 <br>
+
                 <div class="row">
                     <div class="col-md-4">
                         <a href="post.php"><img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive"></a>
@@ -119,17 +120,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                </div>
+
             </div>
             <div class="col-md-3">
             </div>
