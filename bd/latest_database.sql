@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 18 avr. 2020 à 21:48
+-- Généré le :  sam. 18 avr. 2020 à 23:39
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `db_web`
 --
-CREATE DATABASE IF NOT EXISTS `db_web` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `db_web`;
 
 -- --------------------------------------------------------
 
@@ -62,19 +60,20 @@ DROP TABLE IF EXISTS `jaime`;
 CREATE TABLE IF NOT EXISTS `jaime` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_article` int(11) NOT NULL,
-  `id_personne` int(11) NOT NULL,
+  `nom_personne` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `jaime`
 --
 
-INSERT INTO `jaime` (`id`, `id_article`, `id_personne`) VALUES
-(9, 6, 0),
-(10, 1, 0),
-(16, 9, 0),
-(21, 14, 0);
+INSERT INTO `jaime` (`id`, `id_article`, `nom_personne`) VALUES
+(9, 6, ''),
+(25, 1, ''),
+(16, 9, ''),
+(21, 14, ''),
+(28, 1, 'coby');
 
 -- --------------------------------------------------------
 
