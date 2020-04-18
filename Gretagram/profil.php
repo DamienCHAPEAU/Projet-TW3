@@ -152,7 +152,7 @@ while ($dataPost = $prequetePost->fetch()) {
 echo '<div class="row"> ';
 }
                      
-                        $requetePost2 = "Select * FROM publication where user = '$nomU' ;";
+                        $requetePost2 = "Select * FROM publication where user = '$nomU' order by datepubli DESC;";
                         $prequetePost2 = $conn->prepare($requetePost2);
                         $prequetePost2->execute();
                         
