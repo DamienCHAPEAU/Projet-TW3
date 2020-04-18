@@ -48,7 +48,7 @@ else {
     <?php
     include("include/connect.inc.php");
     ?>
-</head>
+</head> 
 
 <!--Contenu-->
 
