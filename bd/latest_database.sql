@@ -50,6 +50,19 @@ INSERT INTO `commentaire` (`message`, `user`, `publication`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `jaime`
+--
+
+DROP TABLE IF EXISTS `jaime`;
+CREATE TABLE IF NOT EXISTS `jaime` ( 
+`id` INT NOT NULL AUTO_INCREMENT , 
+`id_article` INT NOT NULL , 
+`id_personne` INT NOT NULL , 
+PRIMARY KEY (`id`)
+); 
+
+
+--
 -- Structure de la table `personne`
 --
 
