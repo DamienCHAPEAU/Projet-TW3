@@ -21,6 +21,8 @@
     ?>
 </head>
 
+
+
 <!--Contenu-->
 
 <body>
@@ -56,77 +58,112 @@
     <br>
     <br>
     <br>
+<?php
+$nomU = $_GET['nom'];
+$requetePost = "Select * FROM personne where nom = '$nomU' ;";
+$prequetePost = $conn->prepare($requetePost);
+$prequetePost->execute();
+while ($dataPost = $prequetePost->fetch()) {
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-1">
-                    </div>
-                    <div class="col-md-2">
-                        <img src="img/pp.png" alt="pp" class="responsive">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-3">
-                                Nom
+    $user = $dataPost['nom'];
+    $prenom = $dataPost['prenom'];
+    $mail = $dataPost['mail'];
+    $pp = $dataPost['photoProfil'];
+    
+
+
+    echo '
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-2">
+
+
+                                 <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            Nom : @'.$user. $prenom .'
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-light">S'."'".'abonner</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            6 publications
+                                        </div>
+                                        <div class="col-md-4">
+                                            12 abonnés
+                                        </div>
+                                        <div class="col-md-4">
+                                            400 abonnements
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-light">S'abonner</button>
-                            </div>
+                            <br>
+                            <br>
+                            
+                   
+';
+
+echo '<div class="row"> ';
+}
+                     
+                        $requetePost2 = "Select * FROM publication where user = '$nomU' ;";
+                        $prequetePost2 = $conn->prepare($requetePost2);
+                        $prequetePost2->execute();
+                        
+                        while ($dataPost2 = $prequetePost2->fetch()) {
+                        
+                            $photo = $dataPost2['photo'];
+
+                    echo '
+                    
+                    <div class=" col-md-3 thumbnail">
+                    <a href="post.php?id=Coby&post='.$photo.'"><img src="'.$photo.'" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
+                    </div>
+
+
+
+
+     '; }
+
+     echo'
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                6 publications
-                            </div>
-                            <div class="col-md-4">
-                                12 abonnés
-                            </div>
-                            <div class="col-md-4">
-                                400 abonnements
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                    </div>
-                </div>
-                <br>
-                <br>
+                       
+                        <br>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <a href="post.php"><img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive"></a>
                     </div>
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
+                    <div class="col-md-3">
                     </div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
-                    </div>
-                </div>
-                <br>
+            </div>
+    
+';
+    
+  
 
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
+
+ ;
+
+    ?>
     </div>
-    <br>
     <!--Fin Post-->
     <br>
     <!--Footer-->
@@ -135,7 +172,5 @@
     </footer>
     <!--Fin Footer-->
 </body>
-
-
 
 </html>

@@ -78,14 +78,15 @@ while ($dataPost = $prequetePost->fetch()) {
             <div class="col-md-3">
             </div>
             <div class="col-md-6 fond">
-                <h5>' . $titre . ' by ' . $user . '  </h5>
-                
+            <br>
+                <h5>' . $titre . ' by <a href ="profil.php?nom='.$user.'" style="color:#34A200" > @' . $user . '</a>  </h5>
+                <hr style="width: 100%; color: black; height: 1px; background-color:black;">
                 <div class="row">
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-8">
                         <div class="row">
-                            <img src="'. $image .'" width="400">
+                            <a href="post.php?id=defaut&post='.$image.'"><img src="'. $image .'" width="400"></a>
                         </div>
                         <div class="row">
                             <div class="col-md-1">

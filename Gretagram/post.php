@@ -23,6 +23,7 @@
 
 <!--Contenu-->
 
+
 <body>
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -57,25 +58,55 @@
     <br>
     <br>
 
+
+
+
+<?php
+$param = $_GET['post'];
+$requetePost = "Select * FROM publication where photo = "."'".$param."'".";";
+$prequetePost = $conn->prepare($requetePost);
+$prequetePost->execute();
+while ($dataPost = $prequetePost->fetch()) {
+
+    $photo = $dataPost['photo'];
+    $nom = $dataPost['user'];
+
+echo '
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                Nom
+               <h4><a href="profil.php?nom='.$nom.'" style="color:#34A200">@'.$nom.'</a></h4>
+                <hr style="width: 100%; color: black; height: 1px; background-color:black;">
+
                 <div class="row">
                     <div class="col-md-5">
-                        <img src="img/tilleul-arbre.jpg" alt="arbre" class="responsive">
+                        <img src='.$photo.' alt="arbre" class=" img-thumbnail responsive">
                     </div>
-                    <div class="col-md-7">
-                        <div>
-                            <p>Nom</p>
-                            <p>Commentaire CommentaireCommentaire Commentaire Commentaire Commentaire Commentaire</p>
-                        </div>
-                        <div>
-                            <p>Nom</p>
-                            <p>Commentaire</p>
-                        </div>
-                    </div>
+                    
+';
+}
+
+?>
+                   <div class="col-md-7">
+                <textarea readonly style="resize: none" class="form-control" rows="15" >
+<?php
+$param = $_GET['post'];
+$requetePost = "Select * FROM commentaire where publication = "."'".$param."'".";";
+//echo $requetePost;
+$prequetePost = $conn->prepare($requetePost);
+$prequetePost->execute();
+while ($dataPost = $prequetePost->fetch()) {
+
+    $comm = $dataPost['message'];
+    $nom = $dataPost['user'];
+    $date = $dataPost['date'];
+
+            echo '@'.$nom.' : '.$comm."&#013;&#010 &#013;&#010";
+}
+?> 
+</textarea>
+                   </div>
                 </div>
                 <br>
                 <div class="row">
@@ -91,12 +122,18 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-7">
+
+                    <form method="post"  enctype="multipart/form-data"  >
+
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Ajouter un commentaire" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <textarea  name="newComm" class="form-control" placeholder="Ajouter un commentaire" aria-label="Recipient'."'".'s username" aria-describedby="basic-addon2"></textarea>
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button">Envoyer</button>
+                            <input type="submit" class="btn btn-outline-secondary" name="submit_commentaire"  value="Envoyer">
+                                
                             </div>
                         </div>
+
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-2"></div>
@@ -104,7 +141,54 @@
 
         </div>
 
+    <?php
+            $photo ="";
+            $id = $_GET['id'];
+            $publi = $_GET['post'];
+            
+            if(!empty($_POST["newComm"]) && isset($_POST['submit_commentaire'])) {
+                
+                $newComm =$_POST['newComm'];
+                $commSlash = addslashes ($newComm );
 
+
+                $sql = " INSERT INTO commentaire ( message, publication, user) VALUES ('".$commSlash."', '".$publi."', '".$id."') ;";
+                echo $sql;
+
+                $host='localhost';
+                $user='root';
+                $pass='';
+                $dbname='DB_WEB';
+                
+
+                
+                    $conn = new mysqli($host, $user, $pass, $dbname);
+
+                    
+
+
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                        echo "erreur";
+                    }
+            
+                    if ($conn->query($sql) === TRUE) {
+                   
+                        echo "New record created successfully";
+                    } else {
+                        echo "Error: " . $sql . "<br>" . $conn->error;
+                    }
+                    
+                    $conn->close();
+
+                   echo '<meta http-equiv="refresh" content="0">';
+
+            }
+
+
+
+
+        ?>
 
         <!--Fin Post-->
         <br>
