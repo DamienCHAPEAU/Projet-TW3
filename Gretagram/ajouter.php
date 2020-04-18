@@ -17,7 +17,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 	echo '<br />';
 
 	// On affiche un lien pour fermer notre session
-	echo '<a href="deconnexion.php">Déconnection</a>';
+	echo '<a href="deconnexion.php">Déconnexion</a>';
 }
 else {
     //echo 'Les variables ne sont pas déclarées.';

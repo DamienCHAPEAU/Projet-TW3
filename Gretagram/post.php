@@ -17,7 +17,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 	echo '<br />';
 
 	// On affiche un lien pour fermer notre session
-	echo '<a href="deconnexion.php">Déconnection</a>';
+	echo '<a href="deconnexion.php">Déconnexion</a>';
 }
 else {
     //echo 'Les variables ne sont pas déclarées.';
@@ -155,7 +155,7 @@ else {
                 $likes = $like->rowCount();
             ?>
 
-            <a href="script/like.php?id=<?php echo $id; ?>"><?php echo $likes ?> J'aime</a> 
+            <a href="script/like.php?id=<?php echo $id;?>&nom=<?php echo $_SESSION['login']; ?>"><?php echo $likes ?> J'aime</a> 
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-7">
