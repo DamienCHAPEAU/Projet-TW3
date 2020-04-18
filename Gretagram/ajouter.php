@@ -1,3 +1,30 @@
+<?php
+// On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
+session_start ();
+
+// On récupère nos variables de session
+if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
+
+	// On teste pour voir si nos variables ont bien été enregistrées
+	echo '<html>';
+	echo '<head>';
+	echo '<title>Page de notre section membre</title>';
+	echo '</head>';
+
+	echo '<body>';
+    //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
+    echo 'Votre login est '.$_SESSION['login'];
+	echo '<br />';
+
+	// On affiche un lien pour fermer notre session
+	echo '<a href="deconnexion.php">Déconnection</a>';
+}
+else {
+    //echo 'Les variables ne sont pas déclarées.';
+    header ('location: login.php?message=erreur');
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -28,8 +55,8 @@
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
-            <img src="img/G.png" alt="Logo" style="width:50px;">
-            Gretagram</a>
+        <div class="styleLogo"><h4>Gretagram</h4></div></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -56,7 +83,7 @@
     <!--Fin Nav-->
     <br>
     <!--Post-->
-    <div class="container">
+    <div class="container" allign=center>
 
 <!-- <form method="post"  enctype="multipart/form-data" ACTION="script/newPost.php"> -->
 
@@ -126,20 +153,26 @@ if (isset($_FILES['photo']['tmp_name'])) {
     // if everything is ok, try to upload file
     } else {
         if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file )) {
-            echo "The file ". basename( $_FILES["photo"]["name"]). " has been uploaded.";
+            //echo "The file ". basename( $_FILES["photo"]["name"]). " has been uploaded.";
 
-            echo '<p>La photo a bien été envoyée.</p>';
+            //echo '<p>La photo a bien été envoyée.</p>';
+
+            echo '<div class="alert alert-warning" role="alert">
+            La photo a bien été envoyée.
+              </div>' ;
+
             echo '<img src="' .$target_file . '">';
 
-            echo'<p>'. $target_file .'<p>';
+            //echo'<p>'. $target_file .'<p>';
 
 
                 $titre = $_POST["titre"];
+                $user = $_SESSION["login"];
                 $description = $_POST["description"];
                 $photo = $target_file;
 
-                $sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', 'Cody',  '".$photo."') ;";
-                echo $sql ;
+                $sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."') ;";
+                //echo $sql ;
             
         } else {
             echo "Sorry, there was an error uploading your file.";
@@ -161,7 +194,11 @@ if (isset($_FILES['photo']['tmp_name'])) {
         }
 
         if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+            //echo "New record created successfully";
+            echo '<div class="alert alert-warning" role="alert">
+            Publication mise en ligne avec succès
+              </div>' ;
+
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }

@@ -1,3 +1,30 @@
+<?php
+// On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
+session_start ();
+
+// On récupère nos variables de session
+if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
+
+	// On teste pour voir si nos variables ont bien été enregistrées
+	echo '<html>';
+	echo '<head>';
+	echo '<title>Page de notre section membre</title>';
+	echo '</head>';
+
+	echo '<body>';
+    //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
+    echo 'Votre login est '.$_SESSION['login'];
+	echo '<br />';
+
+	// On affiche un lien pour fermer notre session
+	echo '<a href="deconnexion.php">Déconnection</a>';
+}
+else {
+    //echo 'Les variables ne sont pas déclarées.';
+    header ('location: login.php?message=erreur');
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -28,8 +55,9 @@
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
-            <img src="img/G.png" alt="Logo" style="width:50px;">
-            Gretagram</a>
+           <!-- <img src="img/G.png" alt="Logo" style="width:50px;"> -->
+            
+           <div class="styleLogo"><h4>Gretagram</h4></div></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -90,24 +118,30 @@
 
     ?>
     <div class="col-md-7">
-        <textarea readonly style="resize: none" class="form-control" rows="15">
-        <?php
+       <!-- <textarea readonly style="resize: none" class="form-control " rows="15">  -->
+       <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 480px; max-height: 400px;">
+
+<?php
         $param = $_GET['post'];
-        $requetePost = "Select * FROM commentaire where publication = " . "'" . $param . "'" . ";";
+        $requetePost = "Select * FROM commentaire where publication = " . "'" . $param . "'" . "Order by date DESC;";
         //echo $requetePost;
         $prequetePost = $conn->prepare($requetePost);
         $prequetePost->execute();
         while ($dataPost = $prequetePost->fetch()) {
 
             $comm = $dataPost['message'];
+            $commhtmlspecial = htmlspecialchars($comm);
             $nom = $dataPost['user'];
             $date = $dataPost['date'];
 
-            echo '@' . $nom . ' : ' . $comm . "&#013;&#010 &#013;&#010";
+            //echo '@' . $nom . ' : ' . $comm . "&#013;&#010 &#013;&#010";
+            echo '<a href ="profil.php?nom='.$nom.'" style="color:#34A200" >@' . $nom . '</a> : ' . $commhtmlspecial .'<br><hr>   ';
             
         }
         ?> 
-        </textarea>
+
+        </div>
+<!-- </textarea> -->
     </div>
     </div>
     <br>
