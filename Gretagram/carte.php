@@ -48,7 +48,11 @@ else {
     <?php
     include("include/connect.inc.php");
     ?>
+<<<<<<< HEAD
 </head> 
+=======
+</head>  
+>>>>>>> 8f90b6aae7d8108c197209126f83d997092f39bb
 
 <!--Contenu-->
 
