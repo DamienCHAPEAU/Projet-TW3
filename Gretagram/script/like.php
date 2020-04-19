@@ -1,9 +1,38 @@
+
+<?php
+// On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
+session_start ();
+
+// On récupère nos variables de session
+if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
+
+	// On teste pour voir si nos variables ont bien été enregistrées
+	echo '<html>';
+	echo '<head>';
+	echo '<title>Page de notre section membre</title>';
+	echo '</head>';
+
+	echo '<body>';
+    //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
+    echo 'Votre login est '.$_SESSION['login'];
+	echo '<br />';
+
+	// On affiche un lien pour fermer notre session
+	echo '<a href="deconnexion.php">Déconnexion</a>';
+}
+else {
+    //echo 'Les variables ne sont pas déclarées.';
+    header ('location: login.php?message=erreur');
+}
+?>
+
 <?php
 include("../include/connect.inc.php");
 
 if(isset($_GET['id']) AND !empty ($_GET['id'])){
     $getid = $_GET['id'];
-    $nompersonne = $_GET['nom'];
+    $nompersonne = $_SESSION['login'];
+    echo $nompersonne;
     $check = $conn->prepare('SELECT id FROM publication WHERE id=?');
     $check->execute(array($getid));
 

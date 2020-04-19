@@ -90,7 +90,8 @@ else {
 
 
     <?php
-    $param = $_GET['post'];
+    $param = htmlspecialchars( $_GET['post']); //TODO
+
     $requetePost = "Select * FROM publication where photo = " . "'" . $param . "'" . ";";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
@@ -110,7 +111,7 @@ else {
 
                 <div class="row">
                     <div class="col-md-5">
-                        <img src=' . $photo . ' alt="arbre" class=" img-thumbnail responsive">
+                        <img src="' . $photo . '" alt="arbre" class=" img-thumbnail responsive">
                     </div>
                     
 ';
@@ -180,7 +181,7 @@ else {
 
     <?php
     $photo = "";
-    $id = $_GET['id'];
+    $id = $_SESSION['login'];
     $publi = $_GET['post'];
 
     if (!empty($_POST["newComm"]) && isset($_POST['submit_commentaire'])) {

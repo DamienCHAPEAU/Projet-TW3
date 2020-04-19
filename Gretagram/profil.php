@@ -68,12 +68,16 @@ else {
                 <li class="nav-item">
                     <a class="nav-link" href="ajouter.php">Ajouter</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link" href="profil.php">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discover.php">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="carte.php">Carte</a>
                 </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
@@ -87,7 +91,12 @@ else {
     <br>
     <br>
 <?php
-$nomU = $_SESSION['login'];
+
+   // $nomU = $_SESSION['login'];
+    if(!empty($_GET['nom'])){
+
+        $nomU= $_GET['nom'];
+    }
 $requetePost = "Select * FROM personne where nom = '$nomU' ;";
 $prequetePost = $conn->prepare($requetePost);
 $prequetePost->execute();

@@ -27,7 +27,6 @@ else {
 
 
 
-
 <!DOCTYPE html>
 <html>
 
@@ -52,11 +51,12 @@ else {
 </head>
 
 
+
 <!--Contenu-->
 
 <body>
     <!--Nav-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light  " >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
         <div class="styleLogo"><h4>Gretagram</h4></div></a>
 
@@ -69,8 +69,8 @@ else {
                 <li class="nav-item">
                     <a class="nav-link" href="ajouter.php">Ajouter</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profilPerso.php">Profil</a>
+                <li class="nav-item active">
+                    <a class="nav-link disabled" href="profil.php">Profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="discover.php">Discover</a>
@@ -87,80 +87,111 @@ else {
         </div>
     </nav>
     <!--Fin Nav-->
+
     <br>
+    <br>
+    <br>
+<?php
 
-    <!--Post-->
-    <div class="container">
+    $nomU = $_SESSION['login'];
 
-
-
-        <?php
-
-$requetePost = "Select * FROM publication order by datepubli DESC";
+$requetePost = "Select * FROM personne where nom = '$nomU' ;";
 $prequetePost = $conn->prepare($requetePost);
 $prequetePost->execute();
 while ($dataPost = $prequetePost->fetch()) {
 
-    $user = $dataPost['user'];
-    $titre = $dataPost['titre'];
-    $description = $dataPost['description'];
-    $nbLike = $dataPost['nblike'];
-    $image = $dataPost['photo'];
+    $user = $dataPost['nom'];
+    $prenom = $dataPost['prenom'];
+    $mail = $dataPost['mail'];
+    $pp = $dataPost['photoProfil'];
+    
 
-
-        $requetePost2 = "Select * FROM personne where nom = '".$user."'";
-        $prequetePost2 = $conn->prepare($requetePost2);
-        $prequetePost2->execute();
-        while ($dataPost2 = $prequetePost2->fetch()) {
-                $pp= $dataPost2['photoProfil'];
 
     echo '
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6 fond">
-            <br>
-                <h5>' . $titre . ' by <a href ="profil.php?nom='.$user.'" style="color:#34A200" ><img class="imgStyle img-thumbnail" src="'. $pp .'" width="45px" > @' . $user . ' </a></h5>
-                <hr style="width: 100%; color: black; height: 1px; background-color:black;">
-                <div class="row">
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <a href="post.php?post='.$image.'"><img src="'. $image .'" width="100%" ></a>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
                         </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                                <i class="fa fa-heart"></i>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-1">
+                                </div>
+                                <div class="col-md-2">
+
+
+                                 <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            Nom : @'.$user. $prenom .'
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <a href="profilEdit.php"><button type="button" class="btn btn-light">Modifier</button></a>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            6 publications
+                                        </div>
+                                        <div class="col-md-4">
+                                            12 abonnés
+                                        </div>
+                                        <div class="col-md-4">
+                                            400 abonnements
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                </div>
                             </div>
-                            <div class="col-md-1">
-                                <i class="fa fa-comment"> '. $description.' </i>
-                            </div>
-                            <div class="col-md-1">
-                                <i class="fa fa-share"></i>
-                            </div>
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-3">
-                                <a class="like">'. $nbLike .' jaime</a>
-                            </div>
-                        </div>
+                            <br>
+                            <br>
+                            
+                   
+';
+
+echo '<div class="row"> ';
+}
+                     
+                        $requetePost2 = "Select * FROM publication where user = '$nomU' order by datepubli DESC;";
+                        $prequetePost2 = $conn->prepare($requetePost2);
+                        $prequetePost2->execute();
+                        
+                        while ($dataPost2 = $prequetePost2->fetch()) {
+                        
+                            $photo = $dataPost2['photo'];
+
+                    echo '
+                    
+                    <div class=" col-md-3 thumbnail">
+                    <a href="post.php?post='.$photo.'"><img src="'.$photo.'" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
                     </div>
-                    <div class="col-md-2">
+
+
+
+
+     '; }
+
+     echo'
+                        </div>
+                        <br>
+                       
+                        <br>
+
+                    </div>
+                    <div class="col-md-3">
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
-        <br>
-    
-    ';
-}}
+            </div>';
+ ;
 
-?>
-
-
+    ?>
     </div>
     <!--Fin Post-->
     <br>

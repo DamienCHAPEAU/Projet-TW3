@@ -48,11 +48,7 @@ else {
     <?php
     include("include/connect.inc.php");
     ?>
-<<<<<<< HEAD
 </head> 
-=======
-</head>  
->>>>>>> 8f90b6aae7d8108c197209126f83d997092f39bb
 
 <!--Contenu-->
 
@@ -72,10 +68,13 @@ else {
                     <a class="nav-link" href="ajouter.php">Ajouter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profil.php">Profil</a>
+                    <a class="nav-link" href="profilPerso.php">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="carte.php">Carte</a>
+                    <a class="nav-link" href="discover.php">Discover</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link disabled" href="carte.php">Carte</a>
                 </li>
 
             </ul>
@@ -84,14 +83,12 @@ else {
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
             </form>
         </div>
-    </nav>
-    <!--Fin Nav-->
-    <br>
-
-
-
-
+        </nav>
+        <!--Fin Nav-->
+        <br>
     </div>
+
+
     <!--Fin Post-->
     <br>
     <!--Footer-->

@@ -53,7 +53,7 @@ else {
 
 <body>
     <!--Nav-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
         <a class="navbar-brand" href="index.php">
         <div class="styleLogo"><h4>Gretagram</h4></div></a>
 
@@ -63,11 +63,14 @@ else {
 
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="ajouter.php">Ajouter</a>
+                <li class="nav-item active">
+                    <a class="nav-link disabled" href="ajouter.php">Ajouter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profil.php">Profil</a>
+                    <a class="nav-link" href="profilPerso.php">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discover.php">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="carte.php">Carte</a>
@@ -114,9 +117,11 @@ Photo:
 
 if (isset($_FILES['photo']['tmp_name'])) {
     $target_dir = "uploads/";
-    $target_file = $target_dir . uniqid() .basename($_FILES["photo"]["name"]) ;
+    $target_file = $target_dir . uniqid() .basename($_FILES["photo"]["name"]) ; 
+    
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    echo $imageFileType ;
     
 
     // Check if image file is a actual image or fake image
