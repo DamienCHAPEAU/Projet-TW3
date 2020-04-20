@@ -4,13 +4,11 @@ session_start ();
 
 // On récupère nos variables de session
 if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
-
 	// On teste pour voir si nos variables ont bien été enregistrées
 	echo '<html>';
 	echo '<head>';
 	echo '<title>Page de notre section membre</title>';
 	echo '</head>';
-
 	echo '<body>';
     //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
     echo 'Votre login est '.$_SESSION['login'];
@@ -25,31 +23,27 @@ else {
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Gretagram</title>
 
-<head>
-    <meta charset="utf-8">
-    <title>Gretagram</title>
-
-    <!--Font-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <!--FontAwesome-->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!--CSS-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <!--JS-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <!-- Include des fonctons pouvant être utilisées + connexion BD-->
-    <?php
-    include("include/connect.inc.php");
-    ?>
-</head>
+        <!--Font-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+        <!--FontAwesome-->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <!--CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <!--JS-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <!-- Include des fonctons pouvant être utilisées + connexion BD-->
+        <?php
+        include("include/connect.inc.php");
+        ?>
+    </head>
 
 
 <!--Contenu-->
@@ -88,19 +82,15 @@ else {
     </nav>
     <!--Fin Nav-->
     <br>
-
     <!--Post-->
     <div class="container">
 
-
-
-        <?php
+<?php
 
 $requetePost = "Select * FROM publication order by datepubli DESC";
 $prequetePost = $conn->prepare($requetePost);
 $prequetePost->execute();
 while ($dataPost = $prequetePost->fetch()) {
-
     $user = $dataPost['user'];
     $titre = $dataPost['titre'];
     $description = $dataPost['description'];
@@ -114,61 +104,56 @@ while ($dataPost = $prequetePost->fetch()) {
         while ($dataPost2 = $prequetePost2->fetch()) {
                 $pp= $dataPost2['photoProfil'];
 
-    echo '
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-6 fond">
-            <br>
-                <h5>' . $titre . ' by <a href ="profil.php?nom='.$user.'" style="color:#34A200" ><img class="imgStyle img-thumbnail" src="'. $pp .'" width="45px" > @' . $user . ' </a></h5>
-                <hr style="width: 100%; color: black; height: 1px; background-color:black;">
-                <div class="row">
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="row">
-                            <a href="post.php?post='.$image.'"><img src="'. $image .'" width="100%" ></a>
+                echo '
+                    <div class="row">
+                        <div class="col-md-3">
                         </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                                <i class="fa fa-heart"></i>
-                            </div>
-                            <div class="col-md-1">
-                                <i class="fa fa-comment"> '. $description.' </i>
-                            </div>
-                            <div class="col-md-1">
-                                <i class="fa fa-share"></i>
-                            </div>
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-3">
-                                <a class="like">'. $nbLike .' jaime</a>
+                        <div class="col-md-6 fond">
+                        <br>
+                            <h5>' . $titre . ' by <a href ="profil.php?nom='.$user.'" style="color:#34A200" ><img class="imgStyle img-thumbnail" src="'. $pp .'" width="45px" > @' . $user . ' </a></h5>
+                            <hr style="width: 100%; color: black; height: 1px; background-color:black;">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <a href="post.php?post='.$image.'"><img src="'. $image .'" width="100%" ></a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <i class="fa fa-comment"> '. $description.' </i>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <i class="fa fa-share"></i>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-3">
+                                            <a class="like">'. $nbLike .' jaime</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                </div>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
-        <br>
-    
-    ';
-}}
-
+                    <br>
+                ';
+        }
+}
 ?>
-
-
-    </div>
-    <!--Fin Post-->
-    <br>
-    <!--Footer-->
-    <footer class="containe-fluid footer">
-        <i class="fa fa-copyright"> Gretagram 2020</i>
-    </footer>
-    <!--Fin Footer-->
-</body>
+        </div>
+        <!--Fin Post-->
+        <br>
+        <!--Footer-->
+        <footer class="containe-fluid footer">
+            <i class="fa fa-copyright"> Gretagram 2020</i>
+        </footer>
+        <!--Fin Footer-->
+    </body>
 
 </html>

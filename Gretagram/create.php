@@ -71,7 +71,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Pseudo :</span>
                                                 </div>
-                                                <input type="text" name="pseudoU" class="form-control" value="Entrer un pseudo" aria-label="pseudo" aria-describedby="basic-addon1">
+                                                <input type="text" name="pseudoU" class="form-control" placeholder="Entrer un pseudo" aria-label="pseudo" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 											
@@ -81,7 +81,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Prénom :</span>
                                                 </div>
-                                                <input type="text" name="prenomU" class="form-control " value="Entrer votre prenom" aria-label="Prenom" aria-describedby="basic-addon1">
+                                                <input type="text" name="prenomU" class="form-control " placeholder="Entrer votre prenom" aria-label="Prenom" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 										
@@ -90,7 +90,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Nom :</span>
                                                 </div>
-                                                <input type="text" name="nomU" class="form-control " value="Entrer votre nom" aria-label="nom" aria-describedby="basic-addon1">
+                                                <input type="text" name="nomU" class="form-control " placeholder="Entrer votre nom" aria-label="nom" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 											
@@ -99,7 +99,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Age :</span>
                                                 </div>
-                                                <input type="text" name="ageU" class="form-control " value="Entrer votre age" aria-label="age" aria-describedby="basic-addon1">
+                                                <input type="text" name="ageU" class="form-control " placeholder="Entrer votre age" aria-label="age" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 											
@@ -108,7 +108,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Adresse mail :</span>
                                                 </div>
-                                                <input type="text" name="mailU" class="form-control " value="ex : coby.bernard@xyz.com" aria-label="mail" aria-describedby="basic-addon1">
+                                                <input type="text" name="mailU" class="form-control " placeholder="ex : coby.bernard@xyz.com" aria-label="mail" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 
@@ -118,7 +118,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Nouveau Mot de passe :</span>
                                                 </div>
-                                                <input type="text" name="mdpU" class="form-control " value="Entrer un mot de passe" aria-label="Mdp" aria-describedby="basic-addon1">
+                                                <input type="text" name="mdpU" class="form-control " placeholder="Entrer un mot de passe" aria-label="Mdp" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
                                         

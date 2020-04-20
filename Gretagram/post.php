@@ -55,9 +55,8 @@ else {
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
-           <!-- <img src="img/G.png" alt="Logo" style="width:50px;"> -->
-            
-           <div class="styleLogo"><h4>Gretagram</h4></div></a>
+        <div class="styleLogo"><h4>Gretagram</h4></div></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -68,11 +67,15 @@ else {
                     <a class="nav-link" href="ajouter.php">Ajouter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profil.php">Profil</a>
+                    <a class="nav-link" href="profilPerso.php">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="discover.php">Discover</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="carte.php">Carte</a>
                 </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
@@ -100,13 +103,14 @@ else {
         $id = $dataPost['id'];
         $photo = $dataPost['photo'];
         $nom = $dataPost['user'];
+        $titre = $dataPost['titre'];
 
         echo '
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-               <h4><a href="profil.php?nom=' . $nom . '" style="color:#34A200">@' . $nom . '</a></h4>
+               <h4>'.$titre.' by <a href="profil.php?nom=' . $nom . '" style="color:#34A200">@' . $nom . '</a></h4>
                 <hr style="width: 100%; color: black; height: 1px; background-color:black;">
 
                 <div class="row">

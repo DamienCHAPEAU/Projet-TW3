@@ -89,39 +89,88 @@ else {
     <div class="container" allign=center>
 
 <!-- <form method="post"  enctype="multipart/form-data" ACTION="script/newPost.php"> -->
+<div class="row">
+<div class="col-5">
 
-<form method="post"  enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'];?>" >
-<br>
-<br>  
-Titre:
-<br>
-<input type="text" name="titre" size="20" maxlength="20"> 
-<br>
-<br>
-description:
-<br>
-<input type="text" name="description" size="20" maxlength="20">
-<br>
-<br>
-Photo:
-<br>
-    <input type="file" name="photo" accept="image/*">
-<br>
-<br>
-<input type="submit"  value="Envoyer">
-</form>
+    <form method="post"  enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'];?>" >
+
+    <br>
+    Localisation:
+    <br><br>
+    <input type="text" disabled name="addressForm" size="40" maxlength="40" value="<?php if(isset($_POST['adrr'])){echo $_POST['adrr'];} ?>">
+    <hr>
+    
+    
+    <br>  
+    Titre:
+    <br>
+    <input type="text" name="titre" size="20" maxlength="20"> 
+    <br>
+    <br>
+    Description:
+    <br>
+    <input type="text" name="description" size="20" maxlength="20">
+    <br>
+
+    <br>
+    <br>
+    Photo:
+    <br>
+        <input type="file" name="photo" accept="image/*">
+    <br>
+    <br>
+    <input type="submit" name="general" value="Envoyer">
+    </form>
  
+</div>
+    <div class="mb-5">
+    <br>
+    
+    Recherchez votre localisation:
+    <br>
+    <br>
+    <form method="post" action="API.php">
+    <input type="text" name="localisation" size="20" maxlength="20">
+    <input type="submit" name="adresse" value="search">
+    <hr>
+    </form>
+    </div>
 
+</div><hr>
 <?php
 
+    if(isset($_SESSION["lat"])){
+        $latitude = $_SESSION["lat"];
+        $longitude = $_SESSION["long"];
+        $addressePost = $_SESSION['adresse'];
+    //echo $_POST['adrr'];
+    }
+    
 
-if (isset($_FILES['photo']['tmp_name'])) {
+
+
+    if(isset($_POST['general'])){
+        
+        /* verif localisation
+        if(!isset($_POST['addressForm'])){
+            if(empty($_POST['addressForm'])){
+
+                echo '<div class="alert alert-warning" role="alert">
+                veuillez saisir une localisation
+                </div>' ;
+
+            }
+        }
+        */
+    
+
+if (!empty($_FILES['photo']['tmp_name'])) {
     $target_dir = "uploads/";
     $target_file = $target_dir . uniqid() .basename($_FILES["photo"]["name"]) ; 
     
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    echo $imageFileType ;
+    //echo $imageFileType ;
     
 
     // Check if image file is a actual image or fake image
@@ -171,45 +220,69 @@ if (isset($_FILES['photo']['tmp_name'])) {
             //echo'<p>'. $target_file .'<p>';
 
 
-                $titre = $_POST["titre"];
-                $user = $_SESSION["login"];
-                $description = $_POST["description"];
-                $photo = $target_file;
+            if(empty($_POST["titre"]) || empty($_POST["description"])){
+                
+                echo '<div class="alert alert-warning" role="alert">
+                tout les champs ne sont pas rempli
+                  </div>' ;
+                    
+            }
 
-                $sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."') ;";
-                //echo $sql ;
-            
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
+                        $titre = $_POST["titre"];
+                        $user = $_SESSION["login"];
+                        $description = $_POST["description"];
+                        $photo = $target_file;
+                        /*$latitude = $_POST["lat"];
+                        $longitude = $_POST["long"];
+                        $addressePost = $_POST['addressForm'];
+                        */
 
 
-    $host='localhost';
-	$user='root';
-	$pass='';
-	$dbname='DB_WEB';
-	
-	
-        $conn = new mysqli($host, $user, $pass, $dbname);
 
-		if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-            echo "erreur";
-        }
+                            $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated ) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."', '".$latitude."', '".$longitude."', '".$addressePost."' ) ;";
+                            //echo $sql ;
 
-        if ($conn->query($sql) === TRUE) {
-            //echo "New record created successfully";
-            echo '<div class="alert alert-warning" role="alert">
-            Publication mise en ligne avec succès
-              </div>' ;
+                                    $host='localhost';
+                                    $user='root';
+                                    $pass='';
+                                    $dbname='DB_WEB';
+                                        $conn = new mysqli($host, $user, $pass, $dbname);
 
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-        
-        $conn->close();
-	
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                            echo "erreur";
+                                        }
+
+                                        if ($conn->query($sql) === TRUE) {
+                                            //echo "New record created successfully";
+                                            echo '<div class="alert alert-warning" role="alert">
+                                            Publication mise en ligne avec succès
+                                            </div>' ;
+
+                                        } else {
+                                            echo "Error: " . $sql . "<br>" . $conn->error;
+                                        }
+                                        
+                                        $conn->close();
+                                            
+                                        } else {
+                                            echo "Sorry, there was an error uploading your file.";
+                                        }
+                        }
+    
+}else{
+
+    echo '<div class="alert alert-warning" role="alert">
+                                Vous n'."'".'avez pas importer d'."'".'image
+                                </div>' ;
+
+}
+
+}else{
+
+    echo '<div class="alert alert-warning" role="alert">
+                                Entrez tout les champs et envoyez votre publication
+                                </div>' ;
 
 }
 ?>

@@ -93,83 +93,70 @@ else {
 
     $nomU = $_SESSION['login'];
     
-$requetePost = "Select * FROM personne where nom = '$nomU' ;";
-$prequetePost = $conn->prepare($requetePost);
-$prequetePost->execute();
-while ($dataPost = $prequetePost->fetch()) {
-	
-	$mdp = $dataPost['mdp'];
-    $user = $dataPost['nom'];
-    $prenom = $dataPost['prenom'];
-    $mail = $dataPost['mail'];
-    $pp = $dataPost['photoProfil'];
-    
-
-
-    echo '  
-    <form method="post"  enctype="multipart/form-data" >
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                    </div> 
-                    
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <img  src='.$pp.' alt="pp" class="responsive" visibility:hidden>
-                                        <br>
-
-                                        <input type="file" name="photo" accept="image/*">
-
-                                    </div>
-                                </div>
-                                    <br>
-
-                                   
-
-                                        <div class="row">
-                                            <div class="col-md-5 ">
-    
-                                                <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                                </div>
-                                                <input type="text" name="nomU" class="form-control" value='.$user.' aria-label="Username" aria-describedby="basic-addon1">
-                                                 </div>
-                                            </div>
-                                            <div class="col-md-5 ">
-
-                                                <div class="input-group mb-4">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">Prénom :</span>
-                                                </div>
-                                                <input type="text" name="prenomU" class="form-control " value='.$prenom.' aria-label="Prenom" aria-describedby="basic-addon1">
-                                                 </div>
-                                            </div>
-											<div class="col-md-10 ">
-
-                                                <div class="input-group mb-4">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">Nouveau Mot de passe :</span>
-                                                </div>
-                                                <input type="text" name="mdpU" class="form-control " value='.$mdp.' aria-label="Mdp" aria-describedby="basic-addon1">
-                                                 </div>
-                                            </div>
-
-                                            
-                                        
-                                        
-                                            <div class="col-md-10">
-                                                <a href="profilEdit.php"><button type="submit" class="btn  btn-success btn-block">Modifier</button></a> 
-                                            </div>
+    $requetePost = "Select * FROM personne where nom = '$nomU' ;";
+    $prequetePost = $conn->prepare($requetePost);
+    $prequetePost->execute();
+    while ($dataPost = $prequetePost->fetch()) {
+        
+        $mdp = $dataPost['mdp'];
+        $user = $dataPost['nom'];
+        $prenom = $dataPost['prenom'];
+        $mail = $dataPost['mail'];
+        $pp = $dataPost['photoProfil'];
+        echo '  
+        <form method="post"  enctype="multipart/form-data" >
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div> 
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1">
                                         </div>
-                                    </form>
-                                    
-                                <br>
-                                               
-';
+                                        <div class="col-md-2">
+                                            <img  src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+                                            <br>
+                                            <input type="file" name="photo" accept="image/*">
+                                        </div>
+                                    </div>
+                                        <br>
+                                            <div class="row">
+                                                <div class="col-md-5 ">
+        
+                                                    <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">@</span>
+                                                    </div>
+                                                    <input type="text" name="nomU" class="form-control" value='.$user.' aria-label="Username" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 ">
+
+                                                    <div class="input-group mb-4">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">Prénom :</span>
+                                                    </div>
+                                                    <input type="text" name="prenomU" class="form-control " value='.$prenom.' aria-label="Prenom" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10 ">
+
+                                                    <div class="input-group mb-4">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">Nouveau Mot de passe :</span>
+                                                    </div>
+                                                    <input type="text" name="mdpU" class="form-control " value='.$mdp.' aria-label="Mdp" aria-describedby="basic-addon1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <a href="profilEdit.php"><button type="submit" class="btn  btn-success btn-block">Modifier</button></a> 
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+                                    <br>
+                                                
+    ';
 
 echo '<div class="row"> ';
 }
@@ -179,12 +166,12 @@ echo '<div class="row"> ';
                         $prequetePost2->execute();
                         
                         while ($dataPost2 = $prequetePost2->fetch()) {
-                        
                             $photo = $dataPost2['photo'];
-                    echo '
-                    <div class=" col-md-3 thumbnail">
-                    <a href="post.php?post='.$photo.'"><img src="'.$photo.'" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
-                    </div> '; }
+                            echo '
+                            <div class=" col-md-3 thumbnail">
+                            <a href="post.php?post='.$photo.'"><img src="'.$photo.'" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
+                            </div> '; 
+                        }
 
      echo'
                        </div>
@@ -211,7 +198,6 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
     
     //echo $nomUpdate;
     //echo $prenomUpdate;
-	
     // maj nom prenom
 	
     $sql = "Update personne set nom ='".$nomUpdate."' , prenom = '".$prenomUpdate."' where nom ='".$lastusername."';";
@@ -237,7 +223,7 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Profil mis à jour
-              </div>' ;
+            </div>' ;
 
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
@@ -246,33 +232,32 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Publications mise à jour
-              </div>' ;
+            </div>' ;
 
               //sleep(3);
 
                 //header ('location: deconnexion.php');
                 //echo "<meta http-equiv=refresh content=3;URL=deconnexion.php>";
                 //session_start();
-                $_SESSION['login']= $nomUpdate;
-                echo "<meta http-equiv=refresh content=1;URL=profilEdit.php>";
-              
-        
+            $_SESSION['login']= $nomUpdate;
+            echo "<meta http-equiv=refresh content=1;URL=profilEdit.php>";
 
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
+
+        
 		if ($conn->query($sql3) === TRUE) {
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Profil mis à jour
-              </div>' ;
+            </div>' ;
 
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
         $conn->close();
-    //
 
     if(!empty($_FILES['photo']['tmp_name'])){
             $target_dir = "uploads/pp/";
@@ -281,8 +266,6 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
             echo $imageFileType ;
             echo $target_file;
-               
-            
 
                 // Check file size
                     if ($_FILES["photo"]["size"] > 5000000) {
@@ -331,34 +314,23 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
                         $pass='';
                         $dbname='DB_WEB';
                         
-                        
                             $conn = new mysqli($host, $user, $pass, $dbname);
-
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error);
                                 echo "erreur";
                             }
-
                             if ($conn->query($sql3) === TRUE) {
                                 //echo "New record created successfully";
                                 echo '<div class="alert alert-warning" role="alert">
                                 Publication mise en ligne avec succès
                                 </div>' ;
-
                             } else {
                                 echo "Error: " . $sql . "<br>" . $conn->error;
                             }
                             $conn->close();
-
-
     }
 }
-//
-
-
 ?>
-
-
     </div>
     <!--Fin Post-->
     <br>

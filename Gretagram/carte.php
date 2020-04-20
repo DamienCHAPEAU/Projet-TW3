@@ -97,9 +97,10 @@ else {
 
 
     <div id="mapid" style="width: 100%; height: 80%;"></div>
+    
 <script>
 
-	var mymap = L.map('mapid').setView([43.602397286206816, 1.4419555664062502], 13);
+	var mymap = L.map('mapid').setView([43.602397286206816, 1.4419555664062502], 10);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
@@ -111,11 +112,48 @@ else {
 		zoomOffset: -1
 	}).addTo(mymap);
 
-	L.marker([43.602397286206816, 1.4419555664062502]).addTo(mymap)
-    .bindPopup("<b>Hello world!</b><br />I am a popup.");
-		//.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+</script>
+    
+    <style>
+    
+    .leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
+    font-size: 0px;
+    }
+    </style>
 
-	/*
+<?php
+
+
+$requetePost = "Select * FROM publication ";
+$prequetePost = $conn->prepare($requetePost);
+$prequetePost->execute();
+while ($dataPost = $prequetePost->fetch()) 
+{
+
+    $user = $dataPost['user'];
+    $titre = $dataPost['titre'];
+    $description = $dataPost['description'];
+    $image = $dataPost['photo'];
+    $latitu = $dataPost['lat'];
+    $longi =  $dataPost['longitude'];
+
+        if(isset($longi)){
+    
+            echo '
+                    <script>
+                    L.marker(['.$latitu.', '.$longi.']).addTo(mymap)
+                    .bindPopup("<b>'.$titre.' by @'.$user.'</b><hr><br/><img src = '.$image.' width=100%><br><a href=post.php?post='.$image.'>Voir le post</a>"); 
+                    </script>
+                    ';
+
+            }
+
+}
+
+//.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+?>
+	
+    <script>
     L.circle([51.508, -0.11], 500, {
 		color: 'red',
 		fillColor: '#f03',
