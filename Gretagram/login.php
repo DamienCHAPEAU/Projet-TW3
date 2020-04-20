@@ -38,7 +38,7 @@
 			<p><a href="#">Forget Password</a></p>
 </div>
 			<div class="box">
-				<p>Don't have account? <a href="#">Sign up</a></p>
+				<p>Don't have account? <a href="create.php">Sign up</a></p>
 			</div>
 		
 	
