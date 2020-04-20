@@ -97,7 +97,8 @@ $requetePost = "Select * FROM personne where nom = '$nomU' ;";
 $prequetePost = $conn->prepare($requetePost);
 $prequetePost->execute();
 while ($dataPost = $prequetePost->fetch()) {
-
+	
+	$mdp = $dataPost['mdp'];
     $user = $dataPost['nom'];
     $prenom = $dataPost['prenom'];
     $mail = $dataPost['mail'];
@@ -147,6 +148,15 @@ while ($dataPost = $prequetePost->fetch()) {
                                                 <input type="text" name="prenomU" class="form-control " value='.$prenom.' aria-label="Prenom" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
+											<div class="col-md-10 ">
+
+                                                <div class="input-group mb-4">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">Nouveau Mot de passe :</span>
+                                                </div>
+                                                <input type="text" name="mdpU" class="form-control " value='.$mdp.' aria-label="Mdp" aria-describedby="basic-addon1">
+                                                 </div>
+                                            </div>
 
                                             
                                         
@@ -193,18 +203,20 @@ echo '<div class="row"> ';
 <?php
 
 if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
-
+	
+	$mdpUpdate = $_POST['mdpU'];
     $nomUpdate = $_POST['nomU'];
     $prenomUpdate = $_POST['prenomU'];
     $lastusername = $_SESSION['login'];
     
     //echo $nomUpdate;
     //echo $prenomUpdate;
-    
+	
     // maj nom prenom
-    
+	
     $sql = "Update personne set nom ='".$nomUpdate."' , prenom = '".$prenomUpdate."' where nom ='".$lastusername."';";
     $sql2 = "Update publication set user ='".$nomUpdate. "' where user = '".$lastusername."';";
+	$sql3 = "Update personne set mdp = '".$mdpUpdate."' where nom ='".$lastusername."';";
 
     //echo $sql."<br> sql22   ".$sql2;
 
@@ -245,6 +257,15 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
                 echo "<meta http-equiv=refresh content=1;URL=profilEdit.php>";
               
         
+
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+		if ($conn->query($sql3) === TRUE) {
+            //echo "New record created successfully";
+            echo '<div class="alert alert-warning" role="alert">
+            Profil mis à jour
+              </div>' ;
 
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
