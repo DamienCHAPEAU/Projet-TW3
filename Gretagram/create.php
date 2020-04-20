@@ -71,7 +71,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Pseudo :</span>
                                                 </div>
-                                                <input type="text" name="pseudoU" class="form-control" value="Entrer un pseudo" aria-label="pseudo" aria-describedby="basic-addon1">
+                                                <input type="text" name="pseudoU" class="form-control" value="" aria-label="pseudo" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 											
@@ -81,7 +81,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Prénom :</span>
                                                 </div>
-                                                <input type="text" name="prenomU" class="form-control " value="Entrer votre prenom" aria-label="Prenom" aria-describedby="basic-addon1">
+                                                <input type="text" name="prenomU" class="form-control " value="" aria-label="Prenom" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 										
@@ -90,7 +90,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Nom :</span>
                                                 </div>
-                                                <input type="text" name="nomU" class="form-control " value="Entrer votre nom" aria-label="nom" aria-describedby="basic-addon1">
+                                                <input type="text" name="nomU" class="form-control " value="" aria-label="nom" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 											
@@ -99,7 +99,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Age :</span>
                                                 </div>
-                                                <input type="text" name="ageU" class="form-control " value="Entrer votre age" aria-label="age" aria-describedby="basic-addon1">
+                                                <input type="text" name="ageU" class="form-control " value="" aria-label="age" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 											
@@ -108,7 +108,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Adresse mail :</span>
                                                 </div>
-                                                <input type="text" name="mailU" class="form-control " value="ex : coby.bernard@xyz.com" aria-label="mail" aria-describedby="basic-addon1">
+                                                <input type="text" name="mailU" class="form-control " value="" aria-label="mail" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
 
@@ -116,9 +116,9 @@ session_start ();
 
                                                 <div class="input-group mb-4">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">Nouveau Mot de passe :</span>
+                                                    <span class="input-group-text" id="basic-addon1">Mot de passe :</span>
                                                 </div>
-                                                <input type="text" name="mdpU" class="form-control " value="Entrer un mot de passe" aria-label="Mdp" aria-describedby="basic-addon1">
+                                                <input type="text" name="mdpU" class="form-control " value="" aria-label="Mdp" aria-describedby="basic-addon1">
                                                  </div>
                                             </div>
                                         
@@ -135,15 +135,17 @@ session_start ();
  
 <!-- création profile -->
  <?php
-
-if(!empty($_POST['pseudoU']) && !empty($_POST['prenomU'])&& !empty($_POST['nomU']) && !empty($_POST['ageU']) && !empty($_POST['emailU']) && !empty($_POST['MdpU'])){
-	
 	$mdp = $_POST['mdpU'];
     $nom = $_POST['nomU'];
     $prenom = $_POST['prenomU'];
     $pseudo = $_POST['pseudoU'];
 	$age = $_POST['ageU'];
     $mail = $_POST['mailU'];
+	
+if(!empty($mdp) && !empty($nom)&& !empty($prenom) && !empty($pseudo) && !empty($age) && !empty($mail)){
+	
+	
+	echo "toto";
 	
 	$sql = "INSERT INTO personne (nomUtilisateur, nom, prenom,dtN,mail,mdp,photoProfil) VALUES ('".$pseudo."', '".$nom."','".$prenom."', '".$age."','".$mail."','".$mdp."',' ')";
 	
