@@ -89,9 +89,6 @@ else {
     <br>
     <br>
 
-
-
-
     <?php
     $param = htmlspecialchars( $_GET['post']); //TODO
 
@@ -115,7 +112,7 @@ else {
 
                 <div class="row">
                     <div class="col-md-5">
-                        <img src="' . $photo . '" alt="arbre" class=" img-thumbnail responsive">
+                        <img src="' . $photo . '" alt="" class=" img-thumbnail responsive">
                     </div>
                     
 ';

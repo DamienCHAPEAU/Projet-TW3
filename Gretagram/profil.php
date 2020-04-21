@@ -69,7 +69,7 @@ else {
                     <a class="nav-link" href="ajouter.php">Ajouter</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="profil.php">Profil</a>
+                    <a class="nav-link" href="profilPerso.php">Profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="discover.php">Discover</a>
@@ -94,9 +94,14 @@ else {
 
    // $nomU = $_SESSION['login'];
     if(!empty($_GET['nom'])){
-
         $nomU= $_GET['nom'];
     }
+    if($nomU == $_SESSION['login']){
+
+        header('Location: profilPerso.php');
+
+    }
+
 $requetePost = "Select * FROM personne where nom = '$nomU' ;";
 $prequetePost = $conn->prepare($requetePost);
 $prequetePost->execute();
@@ -106,58 +111,90 @@ while ($dataPost = $prequetePost->fetch()) {
     $prenom = $dataPost['prenom'];
     $mail = $dataPost['mail'];
     $pp = $dataPost['photoProfil'];
-    
+
+    $requetePost = "Select count(*) as nbpubli FROM publication where user = '$nomU' ;";
+    $prequetePost = $conn->prepare($requetePost);
+    $prequetePost->execute();
+    while ($dataPost = $prequetePost->fetch()) {
+
+        $nombrePubli = $dataPost['nbpubli'];
 
 
-    echo '
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-1">
-                                </div>
-                                <div class="col-md-2">
-
-
-                                 <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
-
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            Nom : @'.$user. $prenom .'
-                                        </div>
-                                        <div class="col-md-3">
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <button type="button" class="btn btn-light">S'."'".'abonner</button>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            6 publications
-                                        </div>
-                                        <div class="col-md-4">
-                                            12 abonnés
-                                        </div>
-                                        <div class="col-md-4">
-                                            400 abonnements
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                </div>
+        echo '
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
                             </div>
-                            <br>
-                            <br>
-                            
-                   
-';
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-2">
 
+
+                                    <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                Nom : @'.$user. $prenom .'
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                ';
+                                                
+                                                $check_abo = $conn->prepare('SELECT id FROM abonnement WHERE nom_suivi = ? AND userAbonn= ?');
+                                                $check_abo->execute(array($user,$_SESSION['login']));
+                                                if($check_abo->rowCount()==1){
+                                                    echo '<a href = "script/abo.php?author='.$user.'"><button type="button" class="btn btn-danger">Se désabonner</button></a> ';
+                                                }else{
+                                                    echo '<a href = "script/abo.php?author='.$user.'"><button type="button" class="btn btn-success">S'."'".'abonner</button></a> ';
+                                                    
+                                                }
+                                                echo '
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                '.$nombrePubli.' publications
+                                            </div>
+                                            <div class="col-md-4">';
+
+                                            $requetePost = "Select count(*) as nbAbonn FROM abonnement where nom_suivi = '$user' ;";
+                                            $compteur_abonn = $conn->prepare($requetePost);
+                                            $compteur_abonn->execute();
+                                            while ($dataPost = $compteur_abonn->fetch()) {
+
+                                                echo $dataPost['nbAbonn'].' abonnés';
+                                            }
+                                            echo '
+                                            </div>
+                                            <div class="col-md-4">';
+                                            $requetePost = "Select count(*) as nbAbonnement FROM abonnement where userAbonn = '$user' ;";
+                                            $compteur_abonn = $conn->prepare($requetePost);
+                                            $compteur_abonn->execute();
+                                            while ($dataPost = $compteur_abonn->fetch()) {
+
+                                                echo $dataPost['nbAbonnement'].' abonnements';
+                                            } 
+                                            
+                                            echo'
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                
+                    
+    ';
+    }
 echo '<div class="row"> ';
 }
                      

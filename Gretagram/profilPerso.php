@@ -93,7 +93,7 @@ else {
     <br>
 <?php
 
-    $nomU = $_SESSION['login'];
+$nomU = $_SESSION['login'];
 
 $requetePost = "Select * FROM personne where nom = '$nomU' ;";
 $prequetePost = $conn->prepare($requetePost);
@@ -105,56 +105,82 @@ while ($dataPost = $prequetePost->fetch()) {
     $mail = $dataPost['mail'];
     $pp = $dataPost['photoProfil'];
     
+    $requetePost = "Select count(*) as nbpubli FROM publication where user = '$nomU' ;";
+    $prequetePost = $conn->prepare($requetePost);
+    $prequetePost->execute();
+    while ($dataPost = $prequetePost->fetch()) {
 
+        $nombrePubli = $dataPost['nbpubli'];
 
-    echo '
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-1">
-                                </div>
-                                <div class="col-md-2">
+    
 
-
-                                 <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
-
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            Nom : @'.$user. $prenom .'
-                                        </div>
-                                        <div class="col-md-3">
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <a href="profilEdit.php"><button type="button" class="btn btn-light">Modifier</button></a>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            6 publications
-                                        </div>
-                                        <div class="col-md-4">
-                                            12 abonnés
-                                        </div>
-                                        <div class="col-md-4">
-                                            400 abonnements
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                </div>
+        echo '
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-3">
                             </div>
-                            <br>
-                            <br>
-                            
-                   
-';
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                    </div>
+                                    <div class="col-md-2">
+
+
+                                    <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                Nom : @'.$user. $prenom .'
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="profilEdit.php"><button type="button" class="btn btn-light">Modifier</button></a>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                '.$nombrePubli.' publications
+                                            </div>
+                                            <div class="col-md-4">';
+
+                                            $requetePost = "Select count(*) as nbAbonn FROM abonnement where nom_suivi = '$user' ;";
+                                            $compteur_abonn = $conn->prepare($requetePost);
+                                            $compteur_abonn->execute();
+                                            while ($dataPost = $compteur_abonn->fetch()) {
+
+                                                echo $dataPost['nbAbonn'].' abonnés';
+                                            }
+
+                                            echo'    
+                                            </div>
+                                            <div class="col-md-4">';
+                                            
+                                                $requetePost = "Select count(*) as nbAbonnement FROM abonnement where userAbonn = '$user' ;";
+                                            $compteur_abonn = $conn->prepare($requetePost);
+                                            $compteur_abonn->execute();
+                                            while ($dataPost = $compteur_abonn->fetch()) {
+
+                                                echo $dataPost['nbAbonnement'].' abonnements';
+                                            } 
+
+                                            echo '    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                
+                    
+    ';
+    }
 
 echo '<div class="row"> ';
 }

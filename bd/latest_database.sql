@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 20 avr. 2020 à 23:53
+-- Généré le :  mar. 21 avr. 2020 à 11:08
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -23,6 +23,27 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `db_web` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `db_web`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `abonnement`
+--
+
+DROP TABLE IF EXISTS `abonnement`;
+CREATE TABLE IF NOT EXISTS `abonnement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userAbonn` varchar(100) NOT NULL,
+  `nom_suivi` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `abonnement`
+--
+
+INSERT INTO `abonnement` (`id`, `userAbonn`, `nom_suivi`) VALUES
+(52, 'Coby', 'Joel');
 
 -- --------------------------------------------------------
 
@@ -59,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `jaime` (
   `id_article` int(11) NOT NULL,
   `nom_personne` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `jaime`
@@ -77,8 +98,10 @@ INSERT INTO `jaime` (`id`, `id_article`, `nom_personne`) VALUES
 (38, 29, 'Fulton'),
 (39, 27, 'Fulton'),
 (40, 30, 'Fulton'),
-(42, 43, 'Coby'),
-(43, 42, 'Coby');
+(47, 43, 'Coby'),
+(44, 42, 'Coby'),
+(45, 46, 'Coby'),
+(46, 45, 'Coby');
 
 -- --------------------------------------------------------
 
