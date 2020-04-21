@@ -123,31 +123,61 @@ else {
 
 <?php
 
+if(!empty($_GET['userSpecifi'])){
+    $userSpec=$_GET['userSpecifi'];
+    $requetePost = "Select * FROM publication where user='".$userSpec."'";
+    //echo $requetePost;
+    $prequetePost = $conn->prepare($requetePost);
+    $prequetePost->execute();
+    while ($dataPost = $prequetePost->fetch()) 
+    {
 
-$requetePost = "Select * FROM publication ";
-$prequetePost = $conn->prepare($requetePost);
-$prequetePost->execute();
-while ($dataPost = $prequetePost->fetch()) 
-{
+        $user = $dataPost['user'];
+        $titre = $dataPost['titre'];
+        $description = $dataPost['description'];
+        $image = $dataPost['photo'];
+        $latitu = $dataPost['lat'];
+        $longi =  $dataPost['longitude'];
 
-    $user = $dataPost['user'];
-    $titre = $dataPost['titre'];
-    $description = $dataPost['description'];
-    $image = $dataPost['photo'];
-    $latitu = $dataPost['lat'];
-    $longi =  $dataPost['longitude'];
+            if(isset($longi)){
+        
+                echo '
+                        <script>
+                        L.marker(['.$latitu.', '.$longi.']).addTo(mymap)
+                        .bindPopup("<b>'.$titre.' by @'.$user.'</b><hr><br/><img src = '.$image.' width=100%><br><a href=post.php?post='.$image.'>Voir le post</a>"); 
+                        </script>
+                        ';
 
-        if(isset($longi)){
-    
-            echo '
-                    <script>
-                    L.marker(['.$latitu.', '.$longi.']).addTo(mymap)
-                    .bindPopup("<b>'.$titre.' by @'.$user.'</b><hr><br/><img src = '.$image.' width=100%><br><a href=post.php?post='.$image.'>Voir le post</a>"); 
-                    </script>
-                    ';
+                }
 
-            }
+    }
+}else{
 
+    $requetePost = "Select * FROM publication ";
+    $prequetePost = $conn->prepare($requetePost);
+    $prequetePost->execute();
+    while ($dataPost = $prequetePost->fetch()) 
+    {
+
+        $user = $dataPost['user'];
+        $titre = $dataPost['titre'];
+        $description = $dataPost['description'];
+        $image = $dataPost['photo'];
+        $latitu = $dataPost['lat'];
+        $longi =  $dataPost['longitude'];
+
+            if(isset($longi)){
+        
+                echo '
+                        <script>
+                        L.marker(['.$latitu.', '.$longi.']).addTo(mymap)
+                        .bindPopup("<b>'.$titre.' by @'.$user.'</b><hr><br/><img src = '.$image.' width=100%><br><a href=post.php?post='.$image.'>Voir le post</a>"); 
+                        </script>
+                        ';
+
+                }
+
+    }
 }
 
 //.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();

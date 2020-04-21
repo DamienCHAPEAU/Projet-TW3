@@ -184,6 +184,11 @@ while ($dataPost = $prequetePost->fetch()) {
                                             
                                             echo'
                                                 </div>
+                                                <br>
+                                                <br>
+                                                <div class="col-md-6">
+                                                <a href= "carte.php?userSpecifi='.$user.'">voir mes publications sur la carte</a>
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-md-1">
