@@ -1,27 +1,26 @@
 <?php
 // On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
-session_start ();
+session_start();
 
 // On récupère nos variables de session
 if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
-	// On teste pour voir si nos variables ont bien été enregistrées
-	echo '<html>';
-	echo '<head>';
-	echo '<title>Page de notre section membre</title>';
-	echo '</head>';
+    // On teste pour voir si nos variables ont bien été enregistrées
+    echo '<html>';
+    echo '<head>';
+    echo '<title>Page de notre section membre</title>';
+    echo '</head>';
 
-	echo '<body>';
+    echo '<body>';
     //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
-    echo 'Votre login est '.$_SESSION['login'];
-	echo '<br />';
+    echo 'Votre login est ' . $_SESSION['login'];
+    echo '<br />';
 
-	// On affiche un lien pour fermer notre session
-	echo '<a href="deconnexion.php">Déconnexion</a>';
-}
-else {
+    // On affiche un lien pour fermer notre session
+    echo '<a href="deconnexion.php">Déconnexion</a>';
+} else {
     //echo 'Les variables ne sont pas déclarées.';
-    header ('location: login.php?message=erreur');
+    header('location: login.php?message=erreur');
 }
 ?>
 
@@ -58,7 +57,10 @@ else {
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
-        <div class="styleLogo"><h4>Gretagram</h4></div></a>
+            <div class="styleLogo">
+                <h4>Gretagram</h4>
+            </div>
+        </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -79,9 +81,13 @@ else {
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                <input class="form-control mr-sm-2" type="text" id="search-user" placeholder="Rechercher">
             </form>
+            <div style="margin-top: 20px">
+                <div id="result-search">
+                    <ul style="list-style: none;"></ul>
+                </div>
+            </div>
         </div>
     </nav>
     <!--Fin Nav-->
@@ -89,15 +95,15 @@ else {
     <br>
     <br>
     <br>
-<?php
+    <?php
 
     $nomU = $_SESSION['login'];
-    
+
     $requetePost = "Select * FROM personne where nom = '$nomU' ;";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
     while ($dataPost = $prequetePost->fetch()) {
-        
+
         $mdp = $dataPost['mdp'];
         $user = $dataPost['nom'];
         $prenom = $dataPost['prenom'];
@@ -114,7 +120,7 @@ else {
                                         <div class="col-md-1">
                                         </div>
                                         <div class="col-md-2">
-                                            <img  src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+                                            <img  src=' . $pp . ' alt="pp" class="responsive" visibility:hidden>
                                             <br>
                                             <input type="file" name="photo" accept="image/*">
                                         </div>
@@ -127,7 +133,7 @@ else {
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">@</span>
                                                     </div>
-                                                    <input type="text" name="nomU" class="form-control" value='.$user.' aria-label="Username" aria-describedby="basic-addon1">
+                                                    <input type="text" name="nomU" class="form-control" value=' . $user . ' aria-label="Username" aria-describedby="basic-addon1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-5 ">
@@ -136,7 +142,7 @@ else {
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">Prénom :</span>
                                                     </div>
-                                                    <input type="text" name="prenomU" class="form-control " value='.$prenom.' aria-label="Prenom" aria-describedby="basic-addon1">
+                                                    <input type="text" name="prenomU" class="form-control " value=' . $prenom . ' aria-label="Prenom" aria-describedby="basic-addon1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-10 ">
@@ -145,7 +151,7 @@ else {
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">Nouveau Mot de passe :</span>
                                                     </div>
-                                                    <input type="text" name="mdpU" class="form-control " value='.$mdp.' aria-label="Mdp" aria-describedby="basic-addon1">
+                                                    <input type="text" name="mdpU" class="form-control " value=' . $mdp . ' aria-label="Mdp" aria-describedby="basic-addon1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-10">
@@ -158,22 +164,22 @@ else {
                                                 
     ';
 
-echo '<div class="row"> ';
-}
-                     
-                        $requetePost2 = "Select * FROM publication where user = '$nomU' order by datepubli DESC;";
-                        $prequetePost2 = $conn->prepare($requetePost2);
-                        $prequetePost2->execute();
-                        
-                        while ($dataPost2 = $prequetePost2->fetch()) {
-                            $photo = $dataPost2['photo'];
-                            echo '
-                            <div class=" col-md-3 thumbnail">
-                            <a href="post.php?post='.$photo.'"><img src="'.$photo.'" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
-                            </div> '; 
-                        }
+        echo '<div class="row"> ';
+    }
 
-     echo'
+    $requetePost2 = "Select * FROM publication where user = '$nomU' order by datepubli DESC;";
+    $prequetePost2 = $conn->prepare($requetePost2);
+    $prequetePost2->execute();
+
+    while ($dataPost2 = $prequetePost2->fetch()) {
+        $photo = $dataPost2['photo'];
+        echo '
+                            <div class=" col-md-3 thumbnail">
+                            <a href="post.php?post=' . $photo . '"><img src="' . $photo . '" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
+                            </div> ';
+    }
+
+    echo '
                        </div>
                         <br>   
                         <br>
@@ -181,37 +187,36 @@ echo '<div class="row"> ';
                     <div class="col-md-3">
                     </div>
                 </div>
-            </div>';
- ;
+            </div>';;
     ?>
 
 
-<!-- maj info profile -->
-<?php
+    <!-- maj info profile -->
+    <?php
 
-if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
-	
-	$mdpUpdate = $_POST['mdpU'];
-    $nomUpdate = $_POST['nomU'];
-    $prenomUpdate = $_POST['prenomU'];
-    $lastusername = $_SESSION['login'];
-    
-    //echo $nomUpdate;
-    //echo $prenomUpdate;
-    // maj nom prenom
-	
-    $sql = "Update personne set nom ='".$nomUpdate."' , prenom = '".$prenomUpdate."' where nom ='".$lastusername."';";
-    $sql2 = "Update publication set user ='".$nomUpdate. "' where user = '".$lastusername."';";
-	$sql4 = "Update personne set mdp = '".$mdpUpdate."' where nom ='".$lastusername."';";
+    if (!empty($_POST['nomU']) && !empty($_POST['prenomU'])) {
 
-    //echo $sql."<br> sql22   ".$sql2;
+        $mdpUpdate = $_POST['mdpU'];
+        $nomUpdate = $_POST['nomU'];
+        $prenomUpdate = $_POST['prenomU'];
+        $lastusername = $_SESSION['login'];
 
-    $host='localhost';
-    $user='root';
-    $pass='';
-    $dbname='DB_WEB';
-    
-    
+        //echo $nomUpdate;
+        //echo $prenomUpdate;
+        // maj nom prenom
+
+        $sql = "Update personne set nom ='" . $nomUpdate . "' , prenom = '" . $prenomUpdate . "' where nom ='" . $lastusername . "';";
+        $sql2 = "Update publication set user ='" . $nomUpdate . "' where user = '" . $lastusername . "';";
+        $sql4 = "Update personne set mdp = '" . $mdpUpdate . "' where nom ='" . $lastusername . "';";
+
+        //echo $sql."<br> sql22   ".$sql2;
+
+        $host = 'localhost';
+        $user = 'root';
+        $pass = '';
+        $dbname = 'DB_WEB';
+
+
         $conn = new mysqli($host, $user, $pass, $dbname);
 
         if ($conn->connect_error) {
@@ -223,8 +228,7 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Profil mis à jour
-            </div>' ;
-
+            </div>';
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -232,105 +236,104 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Publications mise à jour
-            </div>' ;
+            </div>';
 
-              //sleep(3);
+            //sleep(3);
 
-                //header ('location: deconnexion.php');
-                //echo "<meta http-equiv=refresh content=3;URL=deconnexion.php>";
-                //session_start();
-            $_SESSION['login']= $nomUpdate;
+            //header ('location: deconnexion.php');
+            //echo "<meta http-equiv=refresh content=3;URL=deconnexion.php>";
+            //session_start();
+            $_SESSION['login'] = $nomUpdate;
             echo "<meta http-equiv=refresh content=1;URL=profilEdit.php>";
-
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
-        
-		if ($conn->query($sql4) === TRUE) {
+
+        if ($conn->query($sql4) === TRUE) {
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Profil mis à jour
-            </div>' ;
-
+            </div>';
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
         $conn->close();
 
-    if(!empty($_FILES['photo']['tmp_name'])){
+        if (!empty($_FILES['photo']['tmp_name'])) {
             $target_dir = "uploads/pp/";
-            $target_file = $target_dir . uniqid() .basename($_FILES["photo"]["name"]) ; 
+            $target_file = $target_dir . uniqid() . basename($_FILES["photo"]["name"]);
             $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            echo $imageFileType ;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            echo $imageFileType;
             echo $target_file;
 
-                // Check file size
-                    if ($_FILES["photo"]["size"] > 5000000) {
-                        echo "Sorry, your file is too large.";
-                        $uploadOk = 0;
-                    }
-                    // Allow certain file formats
-                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                    && $imageFileType != "gif" ) {
-                        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                        $uploadOk = 0;
-                    }
-                    // Check if $uploadOk is set to 0 by an error
-                    if ($uploadOk == 0) {
-                        echo "Sorry, your file was not uploaded.";
-                    // if everything is ok, try to upload file
-                    } else {
-                        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file )) {
-                            //echo "The file ". basename( $_FILES["photo"]["name"]). " has been uploaded.";
+            // Check file size
+            if ($_FILES["photo"]["size"] > 5000000) {
+                echo "Sorry, your file is too large.";
+                $uploadOk = 0;
+            }
+            // Allow certain file formats
+            if (
+                $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif"
+            ) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $uploadOk = 0;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                echo "Sorry, your file was not uploaded.";
+                // if everything is ok, try to upload file
+            } else {
+                if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
+                    //echo "The file ". basename( $_FILES["photo"]["name"]). " has been uploaded.";
 
-                            //echo '<p>La photo a bien été envoyée.</p>';
+                    //echo '<p>La photo a bien été envoyée.</p>';
 
-                            echo '<div class="alert alert-warning" role="alert">
+                    echo '<div class="alert alert-warning" role="alert">
                             La photo a bien été envoyée.
-                            </div>' ;
+                            </div>';
 
-                            echo '<img src="' .$target_file . '">';
+                    echo '<img src="' . $target_file . '">';
 
-                            echo'<p>'. $target_file .'<p>';
+                    echo '<p>' . $target_file . '<p>';
 
-                                $user = $_SESSION["login"];                                
-                                $photo = $target_file;
+                    $user = $_SESSION["login"];
+                    $photo = $target_file;
 
-                                $sql3 = "Update personne set photoProfil ='".$target_file."' where nom ='".$lastusername."';";
+                    $sql3 = "Update personne set photoProfil ='" . $target_file . "' where nom ='" . $lastusername . "';";
 
-                                //$sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."') ;";
-                                echo $sql3 ;
-                            
-                        } else {
-                            echo "Sorry, there was an error uploading your file.";
-                        }
-                    }
+                    //$sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."') ;";
+                    echo $sql3;
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            }
 
-                        $host='localhost';
-                        $user='root';
-                        $pass='';
-                        $dbname='DB_WEB';
-                        
-                            $conn = new mysqli($host, $user, $pass, $dbname);
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                                echo "erreur";
-                            }
-                            if ($conn->query($sql3) === TRUE) {
-                                //echo "New record created successfully";
-                                echo '<div class="alert alert-warning" role="alert">
+            $host = 'localhost';
+            $user = 'root';
+            $pass = '';
+            $dbname = 'DB_WEB';
+
+            $conn = new mysqli($host, $user, $pass, $dbname);
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+                echo "erreur";
+            }
+            if ($conn->query($sql3) === TRUE) {
+                //echo "New record created successfully";
+                echo '<div class="alert alert-warning" role="alert">
                                 Publication mise en ligne avec succès
-                                </div>' ;
-                            } else {
-                                echo "Error: " . $sql . "<br>" . $conn->error;
-                            }
-                            $conn->close();
+                                </div>';
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            $conn->close();
+        }
     }
-}
-?>
+    ?>
     </div>
     <!--Fin Post-->
     <br>
@@ -339,6 +342,30 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
         <i class="fa fa-copyright"> Gretagram 2020</i>
     </footer>
     <!--Fin Footer-->
+    <!--Script JS-->
+    <script>
+        $(document).ready(function() {
+            $('#search-user').keyup(function() {
+                $('#result-search ul').html('');
+                var utilisateur = $(this).val();
+                if (utilisateur != "") {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'script/searchuser.php',
+                        data: 'user=' + encodeURIComponent(utilisateur),
+                        success: function(data) {
+                            if (data != "") {
+                                $('#result-search ul').append(data);
+                            } else {
+                                document.getElementById('result-search').innerHTML = "<div style='font-size: 20px; text-align: center'; margin-top: 10px;>Aucun utilisateur</div>";
+                            }
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -1,27 +1,26 @@
 <?php
 // On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
-session_start ();
+session_start();
 
 // On récupère nos variables de session
 if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
-	// On teste pour voir si nos variables ont bien été enregistrées
-	echo '<html>';
-	echo '<head>';
-	echo '<title>Page de notre section membre</title>';
-	echo '</head>';
+    // On teste pour voir si nos variables ont bien été enregistrées
+    echo '<html>';
+    echo '<head>';
+    echo '<title>Page de notre section membre</title>';
+    echo '</head>';
 
-	echo '<body>';
+    echo '<body>';
     //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
-    echo 'Votre login est '.$_SESSION['login'];
-	echo '<br />';
+    echo 'Votre login est ' . $_SESSION['login'];
+    echo '<br />';
 
-	// On affiche un lien pour fermer notre session
-	echo '<a href="deconnexion.php">Déconnexion</a>';
-}
-else {
+    // On affiche un lien pour fermer notre session
+    echo '<a href="deconnexion.php">Déconnexion</a>';
+} else {
     //echo 'Les variables ne sont pas déclarées.';
-    header ('location: login.php?message=erreur');
+    header('location: login.php?message=erreur');
 }
 ?>
 
@@ -57,7 +56,10 @@ else {
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
-        <div class="styleLogo"><h4>Gretagram</h4></div></a>
+            <div class="styleLogo">
+                <h4>Gretagram</h4>
+            </div>
+        </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -80,9 +82,13 @@ else {
 
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                <input class="form-control mr-sm-2" type="text" id="search-user" placeholder="Rechercher">
             </form>
+            <div style="margin-top: 20px">
+                <div id="result-search">
+                    <ul style="list-style: none;"></ul>
+                </div>
+            </div>
         </div>
     </nav>
     <!--Fin Nav-->
@@ -90,37 +96,36 @@ else {
     <br>
     <br>
     <br>
-<?php
+    <?php
 
-   // $nomU = $_SESSION['login'];
-    if(!empty($_GET['nom'])){
-        $nomU= $_GET['nom'];
+    // $nomU = $_SESSION['login'];
+    if (!empty($_GET['nom'])) {
+        $nomU = $_GET['nom'];
     }
-    if($nomU == $_SESSION['login']){
+    if ($nomU == $_SESSION['login']) {
 
         header('Location: profilPerso.php');
-
     }
 
-$requetePost = "Select * FROM personne where nom = '$nomU' ;";
-$prequetePost = $conn->prepare($requetePost);
-$prequetePost->execute();
-while ($dataPost = $prequetePost->fetch()) {
-
-    $user = $dataPost['nom'];
-    $prenom = $dataPost['prenom'];
-    $mail = $dataPost['mail'];
-    $pp = $dataPost['photoProfil'];
-
-    $requetePost = "Select count(*) as nbpubli FROM publication where user = '$nomU' ;";
+    $requetePost = "Select * FROM personne where nom = '$nomU' ;";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
     while ($dataPost = $prequetePost->fetch()) {
 
-        $nombrePubli = $dataPost['nbpubli'];
+        $user = $dataPost['nom'];
+        $prenom = $dataPost['prenom'];
+        $mail = $dataPost['mail'];
+        $pp = $dataPost['photoProfil'];
+
+        $requetePost = "Select count(*) as nbpubli FROM publication where user = '$nomU' ;";
+        $prequetePost = $conn->prepare($requetePost);
+        $prequetePost->execute();
+        while ($dataPost = $prequetePost->fetch()) {
+
+            $nombrePubli = $dataPost['nbpubli'];
 
 
-        echo '
+            echo '
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-3">
@@ -132,62 +137,61 @@ while ($dataPost = $prequetePost->fetch()) {
                                     <div class="col-md-2">
 
 
-                                    <img src='.$pp.' alt="pp" class="responsive" visibility:hidden>
+                                    <img src=' . $pp . ' alt="pp" class="responsive" visibility:hidden>
 
                                     </div>
                                     <div class="col-md-8">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                Nom : @'.$user. $prenom .'
+                                                Nom : @' . $user . $prenom . '
                                             </div>
                                             <div class="col-md-3">
                                             </div>
 
                                             <div class="col-md-3">
                                                 ';
-                                                
-                                                $check_abo = $conn->prepare('SELECT id FROM abonnement WHERE nom_suivi = ? AND userAbonn= ?');
-                                                $check_abo->execute(array($user,$_SESSION['login']));
-                                                if($check_abo->rowCount()==1){
-                                                    echo '<a href = "script/abo.php?author='.$user.'"><button type="button" class="btn btn-danger">Se désabonner</button></a> ';
-                                                }else{
-                                                    echo '<a href = "script/abo.php?author='.$user.'"><button type="button" class="btn btn-success">S'."'".'abonner</button></a> ';
-                                                    
-                                                }
-                                                echo '
+
+            $check_abo = $conn->prepare('SELECT id FROM abonnement WHERE nom_suivi = ? AND userAbonn= ?');
+            $check_abo->execute(array($user, $_SESSION['login']));
+            if ($check_abo->rowCount() == 1) {
+                echo '<a href = "script/abo.php?author=' . $user . '"><button type="button" class="btn btn-danger">Se désabonner</button></a> ';
+            } else {
+                echo '<a href = "script/abo.php?author=' . $user . '"><button type="button" class="btn btn-success">S' . "'" . 'abonner</button></a> ';
+            }
+            echo '
                                             </div>
                                         </div>
                                         <br>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                '.$nombrePubli.' publications
+                                                ' . $nombrePubli . ' publications
                                             </div>
                                             <div class="col-md-4">';
 
-                                            $requetePost = "Select count(*) as nbAbonn FROM abonnement where nom_suivi = '$user' ;";
-                                            $compteur_abonn = $conn->prepare($requetePost);
-                                            $compteur_abonn->execute();
-                                            while ($dataPost = $compteur_abonn->fetch()) {
+            $requetePost = "Select count(*) as nbAbonn FROM abonnement where nom_suivi = '$user' ;";
+            $compteur_abonn = $conn->prepare($requetePost);
+            $compteur_abonn->execute();
+            while ($dataPost = $compteur_abonn->fetch()) {
 
-                                                echo $dataPost['nbAbonn'].' abonnés';
-                                            }
-                                            echo '
+                echo $dataPost['nbAbonn'] . ' abonnés';
+            }
+            echo '
                                             </div>
                                             <div class="col-md-4">';
-                                            $requetePost = "Select count(*) as nbAbonnement FROM abonnement where userAbonn = '$user' ;";
-                                            $compteur_abonn = $conn->prepare($requetePost);
-                                            $compteur_abonn->execute();
-                                            while ($dataPost = $compteur_abonn->fetch()) {
+            $requetePost = "Select count(*) as nbAbonnement FROM abonnement where userAbonn = '$user' ;";
+            $compteur_abonn = $conn->prepare($requetePost);
+            $compteur_abonn->execute();
+            while ($dataPost = $compteur_abonn->fetch()) {
 
-                                                echo $dataPost['nbAbonnement'].' abonnements';
-                                            } 
-                                            
-                                            echo'
+                echo $dataPost['nbAbonnement'] . ' abonnements';
+            }
+
+            echo '
                                                 </div>
                                                 <br>
                                                 <br>
                                                 <div class="col-md-6">
-                                                <a href= "carte.php?userSpecifi='.$user.'"><button class="btn btn-info">Voir les publications sur la carte</button></a>
+                                                <a href= "carte.php?userSpecifi=' . $user . '"><button class="btn btn-info">Voir les publications sur la carte</button></a>
                                                 </div>
                                         </div>
                                     </div>
@@ -197,30 +201,31 @@ while ($dataPost = $prequetePost->fetch()) {
                                 <br>
                                 <br>
     ';
+        }
+        echo '<div class="row"> ';
     }
-echo '<div class="row"> ';
-}
-                     
-                        $requetePost2 = "Select * FROM publication where user = '$nomU' order by datepubli DESC;";
-                        $prequetePost2 = $conn->prepare($requetePost2);
-                        $prequetePost2->execute();
-                        
-                        while ($dataPost2 = $prequetePost2->fetch()) {
-                        
-                            $photo = $dataPost2['photo'];
 
-                    echo '
+    $requetePost2 = "Select * FROM publication where user = '$nomU' order by datepubli DESC;";
+    $prequetePost2 = $conn->prepare($requetePost2);
+    $prequetePost2->execute();
+
+    while ($dataPost2 = $prequetePost2->fetch()) {
+
+        $photo = $dataPost2['photo'];
+
+        echo '
                     
                     <div class=" col-md-3 thumbnail">
-                    <a href="post.php?post='.$photo.'"><img src="'.$photo.'" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
+                    <a href="post.php?post=' . $photo . '"><img src="' . $photo . '" alt="Nature" style="height:100% weight:50%" class=" imgStyle img-thumbnail align-middle"></a>
                     </div>
 
 
 
 
-     '; }
+     ';
+    }
 
-     echo'
+    echo '
                         </div>
                         <br>
                        
@@ -232,12 +237,7 @@ echo '<div class="row"> ';
                 </div>
             </div>
     
-';
-    
-  
-
-
- ;
+';;
 
     ?>
     </div>
@@ -248,6 +248,30 @@ echo '<div class="row"> ';
         <i class="fa fa-copyright"> Gretagram 2020</i>
     </footer>
     <!--Fin Footer-->
+    <!--Script JS-->
+    <script>
+        $(document).ready(function() {
+            $('#search-user').keyup(function() {
+                $('#result-search ul').html('');
+                var utilisateur = $(this).val();
+                if (utilisateur != "") {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'script/searchuser.php',
+                        data: 'user=' + encodeURIComponent(utilisateur),
+                        success: function(data) {
+                            if (data != "") {
+                                $('#result-search ul').append(data);
+                            } else {
+                                document.getElementById('result-search').innerHTML = "<div style='font-size: 20px; text-align: center'; margin-top: 10px;>Aucun utilisateur</div>";
+                            }
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
 </body>
 
 </html>

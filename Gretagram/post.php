@@ -1,27 +1,26 @@
 <?php
 // On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
-session_start ();
+session_start();
 
 // On récupère nos variables de session
 if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
-	// On teste pour voir si nos variables ont bien été enregistrées
-	echo '<html>';
-	echo '<head>';
-	echo '<title>Page de notre section membre</title>';
-	echo '</head>';
+    // On teste pour voir si nos variables ont bien été enregistrées
+    echo '<html>';
+    echo '<head>';
+    echo '<title>Page de notre section membre</title>';
+    echo '</head>';
 
-	echo '<body>';
+    echo '<body>';
     //echo 'Votre login est '.$_SESSION['login'].' et votre mot de passe est '.$_SESSION['mdp'].'.';
-    echo 'Votre login est '.$_SESSION['login'];
-	echo '<br />';
+    echo 'Votre login est ' . $_SESSION['login'];
+    echo '<br />';
 
-	// On affiche un lien pour fermer notre session
-	echo '<a href="deconnexion.php">Déconnexion</a>';
-}
-else {
+    // On affiche un lien pour fermer notre session
+    echo '<a href="deconnexion.php">Déconnexion</a>';
+} else {
     //echo 'Les variables ne sont pas déclarées.';
-    header ('location: login.php?message=erreur');
+    header('location: login.php?message=erreur');
 }
 ?>
 
@@ -55,7 +54,10 @@ else {
     <!--Nav-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="index.php">
-        <div class="styleLogo"><h4>Gretagram</h4></div></a>
+            <div class="styleLogo">
+                <h4>Gretagram</h4>
+            </div>
+        </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -75,12 +77,15 @@ else {
                 <li class="nav-item">
                     <a class="nav-link" href="carte.php">Carte</a>
                 </li>
-
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+                <input class="form-control mr-sm-2" type="text" id="search-user" placeholder="Rechercher">
             </form>
+            <div style="margin-top: 20px">
+                <div id="result-search">
+                    <ul style="list-style: none;"></ul>
+                </div>
+            </div>
         </div>
     </nav>
     <!--Fin Nav-->
@@ -90,7 +95,7 @@ else {
     <br>
 
     <?php
-    $param = htmlspecialchars( $_GET['post']); //TODO
+    $param = htmlspecialchars($_GET['post']); //TODO
 
     $requetePost = "Select * FROM publication where photo = " . "'" . $param . "'" . ";";
     $prequetePost = $conn->prepare($requetePost);
@@ -107,7 +112,7 @@ else {
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-               <h4>'.$titre.' by <a href="profil.php?nom=' . $nom . '" style="color:#34A200">@' . $nom . '</a></h4>
+               <h4>' . $titre . ' by <a href="profil.php?nom=' . $nom . '" style="color:#34A200">@' . $nom . '</a></h4>
                 <hr style="width: 100%; color: black; height: 1px; background-color:black;">
 
                 <div class="row">
@@ -120,30 +125,29 @@ else {
 
     ?>
     <div class="col-md-7">
-       <!-- <textarea readonly style="resize: none" class="form-control " rows="15">  -->
-       <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 480px; max-height: 400px;">
+        <!-- <textarea readonly style="resize: none" class="form-control " rows="15">  -->
+        <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 480px; max-height: 400px;">
 
-<?php
-        $param = $_GET['post'];
-        $requetePost = "Select * FROM commentaire where publication = " . "'" . $param . "'" . "Order by date DESC;";
-        //echo $requetePost;
-        $prequetePost = $conn->prepare($requetePost);
-        $prequetePost->execute();
-        while ($dataPost = $prequetePost->fetch()) {
+            <?php
+            $param = $_GET['post'];
+            $requetePost = "Select * FROM commentaire where publication = " . "'" . $param . "'" . "Order by date DESC;";
+            //echo $requetePost;
+            $prequetePost = $conn->prepare($requetePost);
+            $prequetePost->execute();
+            while ($dataPost = $prequetePost->fetch()) {
 
-            $comm = $dataPost['message'];
-            $commhtmlspecial = htmlspecialchars($comm);
-            $nom = $dataPost['user'];
-            $date = $dataPost['date'];
+                $comm = $dataPost['message'];
+                $commhtmlspecial = htmlspecialchars($comm);
+                $nom = $dataPost['user'];
+                $date = $dataPost['date'];
 
-            //echo '@' . $nom . ' : ' . $comm . "&#013;&#010 &#013;&#010";
-            echo '<a href ="profil.php?nom='.$nom.'" style="color:#34A200" >@' . $nom . '</a> : ' . $commhtmlspecial .'<br><hr>   ';
-            
-        }
-        ?> 
+                //echo '@' . $nom . ' : ' . $comm . "&#013;&#010 &#013;&#010";
+                echo '<a href ="profil.php?nom=' . $nom . '" style="color:#34A200" >@' . $nom . '</a> : ' . $commhtmlspecial . '<br><hr>   ';
+            }
+            ?>
 
         </div>
-<!-- </textarea> -->
+        <!-- </textarea> -->
     </div>
     </div>
     <br>
@@ -152,12 +156,12 @@ else {
         <div class="col-md-2">
 
             <?php
-                $like = $conn->prepare('SELECT id FROM jaime WHERE id_article= ?');
-                $like->execute(array($id));
-                $likes = $like->rowCount();
+            $like = $conn->prepare('SELECT id FROM jaime WHERE id_article= ?');
+            $like->execute(array($id));
+            $likes = $like->rowCount();
             ?>
 
-            <a href="script/like.php?id=<?php echo $id;?>&nom=<?php echo $_SESSION['login']; ?>"><?php echo $likes ?> J'aime</a> 
+            <a href="script/like.php?id=<?php echo $id; ?>&nom=<?php echo $_SESSION['login']; ?>"><?php echo $likes ?> J'aime</a>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-7">
@@ -235,6 +239,30 @@ else {
         <i class="fa fa-copyright"> Gretagram 2020</i>
     </footer>
     <!--Fin Footer-->
+    <!--Script JS-->
+    <script>
+        $(document).ready(function() {
+            $('#search-user').keyup(function() {
+                $('#result-search ul').html('');
+                var utilisateur = $(this).val();
+                if (utilisateur != "") {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'script/searchuser.php',
+                        data: 'user=' + encodeURIComponent(utilisateur),
+                        success: function(data) {
+                            if (data != "") {
+                                $('#result-search ul').append(data);
+                            } else {
+                                document.getElementById('result-search').innerHTML = "<div style='font-size: 20px; text-align: center'; margin-top: 10px;>Aucun utilisateur</div>";
+                            }
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
 </body>
 
 </html>
