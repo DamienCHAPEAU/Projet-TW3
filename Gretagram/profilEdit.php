@@ -202,7 +202,7 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
 	
     $sql = "Update personne set nom ='".$nomUpdate."' , prenom = '".$prenomUpdate."' where nom ='".$lastusername."';";
     $sql2 = "Update publication set user ='".$nomUpdate. "' where user = '".$lastusername."';";
-	$sql3 = "Update personne set mdp = '".$mdpUpdate."' where nom ='".$lastusername."';";
+	$sql4 = "Update personne set mdp = '".$mdpUpdate."' where nom ='".$lastusername."';";
 
     //echo $sql."<br> sql22   ".$sql2;
 
@@ -247,7 +247,7 @@ if(!empty($_POST['nomU']) && !empty($_POST['prenomU'])){
         }
 
         
-		if ($conn->query($sql3) === TRUE) {
+		if ($conn->query($sql4) === TRUE) {
             //echo "New record created successfully";
             echo '<div class="alert alert-warning" role="alert">
             Profil mis à jour

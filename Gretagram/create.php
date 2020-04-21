@@ -53,16 +53,14 @@ session_start ();
                                 <div class="row">
                                     <div class="col-md-1">
                                     </div>
-										<div class="col-md-5">
+										<div class="col-md-2">
+											<img  src="img/pp.png" alt="pp" class="responsive" visibility:hidden>
 											<br>
-
 											<input type="file" name="photo" accept="image/*">
 
 										</div>
 									</div>
                                     <br>
-
-                                   
 
                                         <div class="row">
                                             <div class="col-md-5 ">
@@ -166,15 +164,92 @@ if(!empty($_POST['mdpU']) && !empty($_POST['nomU'])&& !empty($_POST['prenomU']) 
 		
 	if ($conn->query($sql) === TRUE) {
 		//echo "New record created successfully";
-		echo '<div class="alert alert-warning" role="alert">
+		/*echo '<div class="alert alert-warning" role="alert">
 		Profil mis à jour
-		  </div>' ;
+		  </div>' ;*/
 
 	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
 	}
+else{
+	echo '<div class="alert alert-warning" role="alert">
+							Veuillez remplir tout les champs requis.
+                            </div>' ;
+}
+	// photo de profil
+	
+	
+	   if(!empty($_FILES['photo']['tmp_name'])){
+            $target_dir = "uploads/pp/";
+            $target_file = $target_dir . uniqid() .basename($_FILES["photo"]["name"]) ; 
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            //echo $imageFileType ;
+            //echo $target_file;
+
+                // Check file size
+                    if ($_FILES["photo"]["size"] > 5000000) {
+                        echo "Sorry, your file is too large.";
+                        $uploadOk = 0;
+                    }
+                    // Allow certain file formats
+                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                    && $imageFileType != "gif" ) {
+                        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                        $uploadOk = 0;
+                    }
+                    // Check if $uploadOk is set to 0 by an error
+                    if ($uploadOk == 0) {
+                        echo "Sorry, your file was not uploaded.";
+                    // if everything is ok, try to upload file
+                    } else {
+                        if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file )) {
+                            //echo "The file ". basename( $_FILES["photo"]["name"]). " has been uploaded.";
+
+                            //echo '<p>La photo a bien été envoyée.</p>';
+
+                            /*echo '<div class="alert alert-warning" role="alert">
+                            La photo a bien été envoyée.
+                            </div>' ;*/
+
+                            //echo '<img src="' .$target_file . '">';
+
+                            //echo'<p>'. $target_file .'<p>';
+                               
+                                $photo = $target_file;
+
+                                $sql3 = "Update personne set photoProfil ='".$target_file."' where nom ='".$nom."';";
+
+                                //$sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."') ;";
+                                //echo $sql3 ;
+                            
+                        } else {
+                            echo "Sorry, there was an error uploading your file.";
+                        }
+                    }
+
+                        $host='localhost';
+                        $user='root';
+                        $pass='';
+                        $dbname='DB_WEB';
+                        
+                            $conn = new mysqli($host, $user, $pass, $dbname);
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                                echo "erreur";
+                            }
+                            if ($conn->query($sql3) === TRUE) {
+                                //echo "New record created successfully";
+                                echo '<div class="alert alert-warning" role="alert">
+                                Profil crée avec succès
+                                </div>' ;
+                            } else {
+                                echo "Error: " . $sql . "<br>" . $conn->error;
+                            }
+                            $conn->close();
+    }	
 ?>
 
     </div>
