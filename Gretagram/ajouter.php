@@ -142,7 +142,7 @@ else {
     if(isset($_SESSION["lat"])){
         $latitude = $_SESSION["lat"];
         $longitude = $_SESSION["long"];
-        $addressePost = $_SESSION['adresse'];
+        $addressePost = addslashes($_SESSION['adresse']);
     //echo $_POST['adrr'];
     }
     
