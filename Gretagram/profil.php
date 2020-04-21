@@ -187,7 +187,7 @@ while ($dataPost = $prequetePost->fetch()) {
                                                 <br>
                                                 <br>
                                                 <div class="col-md-6">
-                                                <a href= "carte.php?userSpecifi='.$user.'">voir mes publications sur la carte</a>
+                                                <a href= "carte.php?userSpecifi='.$user.'"><button class="btn btn-info">Voir les publications sur la carte</button></a>
                                                 </div>
                                         </div>
                                     </div>
@@ -196,8 +196,6 @@ while ($dataPost = $prequetePost->fetch()) {
                                 </div>
                                 <br>
                                 <br>
-                                
-                    
     ';
     }
 echo '<div class="row"> ';
