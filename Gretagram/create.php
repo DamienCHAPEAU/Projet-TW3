@@ -170,12 +170,12 @@ if(!empty($_POST['mdpU']) && !empty($_POST['nomU'])&& !empty($_POST['prenomU']) 
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
-	}
-else{
 	echo '<div class="alert alert-warning" role="alert">
-							Veuillez remplir tout les champs requis.
+							Votre profil à été crée avec succes.
                             </div>' ;
-}
+	}
+	
+
 	// photo de profil
 	
 	
@@ -233,7 +233,8 @@ else{
                                 echo "Error: " . $sql . "<br>" . $conn->error;
                             }
                             $conn->close();
-    }	
+    }
+	
 ?>
 
     </div>
