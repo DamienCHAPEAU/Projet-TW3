@@ -69,7 +69,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Pseudo :</span>
                                                 </div>
-                                                <input type="text" name="pseudoU" class="form-control" placeholder="Entrer un pseudo" aria-label="pseudo" aria-describedby="basic-addon1">
+                                                <input type="text" name="pseudoU" class="form-control" placeholder="Entrer un pseudo" aria-label="pseudo" aria-describedby="basic-addon1" required>
                                                  </div>
                                             </div>
 											
@@ -79,7 +79,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Prénom :</span>
                                                 </div>
-                                                <input type="text" name="prenomU" class="form-control " placeholder="Entrer votre prenom" aria-label="Prenom" aria-describedby="basic-addon1">
+                                                <input type="text" name="prenomU" class="form-control " placeholder="Entrer votre prenom" aria-label="Prenom" aria-describedby="basic-addon1" required>
                                                  </div>
                                             </div>
 										
@@ -88,7 +88,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Nom :</span>
                                                 </div>
-                                                <input type="text" name="nomU" class="form-control " placeholder="Entrer votre nom" aria-label="nom" aria-describedby="basic-addon1">
+                                                <input type="text" name="nomU" class="form-control " placeholder="Entrer votre nom" aria-label="nom" aria-describedby="basic-addon1" required>
                                                  </div>
                                             </div>
 											
@@ -97,7 +97,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Date de naissance : :</span>
                                                 </div>
-                                                <input type="text" name="dtNU" class="form-control " placeholder="aaaa-mm-jj" aria-label="age" aria-describedby="basic-addon1">
+                                                <input type="date" name="dtNU" class="form-control" aria-label="age" aria-describedby="basic-addon1" required>
 
                                                  </div>
                                             </div>
@@ -107,7 +107,7 @@ session_start ();
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">Adresse mail :</span>
                                                 </div>
-                                                <input type="text" name="mailU" class="form-control " placeholder="ex : coby.bernard@xyz.com" aria-label="mail" aria-describedby="basic-addon1">
+                                                <input type="email" name="mailU" class="form-control " placeholder="ex : coby.bernard@xyz.com" aria-label="mail" aria-describedby="basic-addon1" required>
 
                                                  </div>
                                             </div>
@@ -116,10 +116,10 @@ session_start ();
 
                                                 <div class="input-group mb-4">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">Mot de passe :</span>
+                                                    <span class="input-group-text" id="basic-addon1">Mot de passe (8 caractere min) :</span>
                                                 </div>
 
-                                                <input type="text" name="mdpU" class="form-control " placeholder="Entrer un mot de passe" aria-label="Mdp" aria-describedby="basic-addon1">
+                                                <input type="text" name="mdpU" class="form-control " placeholder="Entrer un mot de passe" aria-label="Mdp" aria-describedby="basic-addon1" minlength="8" required>
 
                                                  </div>
                                             </div>
@@ -146,9 +146,7 @@ if(!empty($_POST['mdpU']) && !empty($_POST['nomU'])&& !empty($_POST['prenomU']) 
 	$dtN = $_POST['dtNU'];
     $mail = $_POST['mailU'];
 	
-	$sql = "INSERT INTO personne (nomUtilisateur, nom, prenom,dtN,mail,mdp,photoProfil) VALUES ('".$pseudo."', '".$nom."','".$prenom."', '".$dtN."','".$mail."','".$mdp."',' ')";
-	
-	//echo $sql."<br> sql22   ".$sql2;
+	$sql = "INSERT INTO personne (nomUtilisateur, nom, prenom,dtN,mail,mdp,photoProfil) VALUES ('".$pseudo."', '".$nom."','".$prenom."','".$dtN."','".$mail."','".$mdp."',' ')";
 
     $host='localhost';
     $user='root';
@@ -186,8 +184,6 @@ else{
             $target_file = $target_dir . uniqid() .basename($_FILES["photo"]["name"]) ; 
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            //echo $imageFileType ;
-            //echo $target_file;
 
                 // Check file size
                     if ($_FILES["photo"]["size"] > 5000000) {
@@ -207,23 +203,11 @@ else{
                     } else {
                         if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file )) {
                             //echo "The file ". basename( $_FILES["photo"]["name"]). " has been uploaded.";
-
-                            //echo '<p>La photo a bien été envoyée.</p>';
-
-                            /*echo '<div class="alert alert-warning" role="alert">
-                            La photo a bien été envoyée.
-                            </div>' ;*/
-
-                            //echo '<img src="' .$target_file . '">';
-
-                            //echo'<p>'. $target_file .'<p>';
-                               
+							
                                 $photo = $target_file;
 
                                 $sql3 = "Update personne set photoProfil ='".$target_file."' where nom ='".$nom."';";
 
-                                //$sql = " INSERT INTO publication ( titre, description, user, photo) VALUES ('".$titre."', '".$description."', '".$user."',  '".$photo."') ;";
-                                //echo $sql3 ;
                             
                         } else {
                             echo "Sorry, there was an error uploading your file.";
