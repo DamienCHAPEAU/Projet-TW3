@@ -64,7 +64,7 @@ else {
 			</form>
 			<h4>OR</h4>
 			
-			<p><a href="#">Forget Password</a></p>
+			<p><a href="forgotPasswd.php">Forget Password</a></p>
 </div>
 			<div class="box">
 				<p>Don't have account? <a href="create.php">Sign up</a></p>
