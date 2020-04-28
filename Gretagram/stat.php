@@ -48,11 +48,97 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
     <?php
     include("include/connect.inc.php");
     ?>
+
+
+
+<?php
+    $param = htmlspecialchars($_GET['id']); //TODO
+
+     $requetePost = "Select count(*) as nbLike FROM jaime where id = (Select id from publication where photo=" . "'" . $param . "'" . ");";
+     $prequetePost = $conn->prepare($requetePost);
+     $prequetePost->execute();
+     while ($dataPost = $prequetePost->fetch()) {
+
+       $nbLikePost = $dataPost['nbLike'];
+
+            $requetePost2 = "Select * FROM publication where photo=" . "'" . $param . "'" . ";";
+            $prequetePost2 = $conn->prepare($requetePost2);
+            $prequetePost2->execute();
+            while ($dataPost2 = $prequetePost2->fetch()) {
+                $nbVuePost = $dataPost2['nbVue'];
+                
+
+                $dataPoints = array( 
+                array("label"=>"Nombre de vue avec like", "y"=>$nbLikePost),
+                array("label"=>"Nombre de vue totale", "y"=>$nbVuePost)
+                );
+
+                $requetePost3 = "Select AVG(nbVue) as nbAVG FROM publication where user=" . "'" . $_SESSION['login'] . "'" . ";";
+                $prequetePost3 = $conn->prepare($requetePost3);
+                $prequetePost3->execute();
+                while ($dataPost3 = $prequetePost3->fetch()) {
+
+                        $nbVueAVG = $dataPost3['nbAVG'];
+
+                        $dataPoints2 = array( 
+                        array("label"=>"Nombre de vue moyen sur vos publication", "y"=>$nbVueAVG),
+                        array("label"=>"Nombre de vue sur cette publication", "y"=>$nbVuePost)
+                        );
+                    }
+        }
+        }
+ 
+?>
+
+<script>
+window.onload = function() {
+ 
+ 
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title: {
+		text: "Nombre de vue en fonction du nombre de like"
+	},
+	subtitles: [{
+		text: "2020"
+	}],
+	data: [{
+		type: "pie",
+		yValueFormatString: "#,##0.00\"%\"",
+		indexLabel: "{label} ({y})",
+		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+chart.render();
+ 
+
+ 
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	title: {
+		text: "Nombre de vue en fonction de votre nombre de vue moyen"
+	},
+	subtitles: [{
+		text: "2020"
+	}],
+	data: [{
+		type: "pie",
+		yValueFormatString: "#,##0.00\"%\"",
+		indexLabel: "{label} ({y})",
+		dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+	}]
+});
+chart2.render();
+ 
+}
+
+</script>
+
 </head>
 
 <?php
 //on incremente le nombre de vue
-    $param = htmlspecialchars($_GET['post']); //TODO
+    $param = htmlspecialchars($_GET['id']); //TODO
     $requetePost = "update  publication set nbVue = nbVue +1 where photo = " . "'" . $param . "'" . ";";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
@@ -106,7 +192,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
     <br>
 
     <?php
-    $param = htmlspecialchars($_GET['post']); //TODO
+    $param = htmlspecialchars($_GET['id']); //TODO
 
     $requetePost = "Select * FROM publication where photo = " . "'" . $param . "'" . ";";
     $prequetePost = $conn->prepare($requetePost);
@@ -133,133 +219,66 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                     
 ';
     }
-
-    ?>
-    <div class="col-md-7">
-        <!-- <textarea readonly style="resize: none" class="form-control " rows="15">  -->
-        <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-width: 480px; max-height: 400px;">
-
-            <?php
-            $param = $_GET['post'];
-            $requetePost = "Select * FROM commentaire where publication = " . "'" . $param . "'" . "Order by date DESC;";
-            //echo $requetePost;
-            $prequetePost = $conn->prepare($requetePost);
-            $prequetePost->execute();
-            while ($dataPost = $prequetePost->fetch()) {
-
-                $comm = $dataPost['message'];
-                $commhtmlspecial = htmlspecialchars($comm);
-                $nom = $dataPost['user'];
-                $date = $dataPost['date'];
-
-                //echo '@' . $nom . ' : ' . $comm . "&#013;&#010 &#013;&#010";
-                echo '<a href ="profil.php?nom=' . $nom . '" style="color:#34A200" >@' . $nom . '</a> : ' . $commhtmlspecial . '<br><hr>   ';
-            }
-            ?>
-
-        </div>
-        <!-- </textarea> -->
-    </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-2">
-
-            <?php
-            $like = $conn->prepare('SELECT id FROM jaime WHERE id_article= ?');
-            $like->execute(array($id));
-            $likes = $like->rowCount();
-            ?>
-
-            <a href="script/like.php?id=<?php echo $id; ?>&nom=<?php echo $_SESSION['login']; ?>"><?php echo $likes ?> J'aime</a>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-7">
-
-            <form method="post" enctype="multipart/form-data">
-
-                <div class="input-group mb-3">
-                    <textarea name="newComm" class="form-control" placeholder="Ajouter un commentaire" aria-label="Recipient'."'".' s username" aria-describedby="basic-addon2"></textarea>
-                    <div class="input-group-append">
-                        <input type="submit" class="btn btn-outline-secondary" name="submit_commentaire" value="Envoyer">
-
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
-    <div class="col-md-2"></div>
-    </div>
-
-    </div>
-
-    <?php
-    $photo = "";
-    $id = $_SESSION['login'];
-    $publi = $_GET['post'];
-
-    if (!empty($_POST["newComm"]) && isset($_POST['submit_commentaire'])) {
-
-        $newComm = $_POST['newComm'];
-        $commSlash = addslashes($newComm);
-
-
-        $sql = " INSERT INTO commentaire ( message, publication, user) VALUES ('" . $commSlash . "', '" . $publi . "', '" . $id . "') ;";
-        echo $sql;
-
-        $host = 'localhost';
-        $user = 'root';
-        $pass = '';
-        $dbname = 'DB_WEB';
-
-
-
-        $conn = new mysqli($host, $user, $pass, $dbname);
-
-
-
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-            echo "erreur";
-        }
-
-        if ($conn->query($sql) === TRUE) {
-
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        $conn->close();
-
-        echo '<meta http-equiv="refresh" content="0">';
-    }
-
-
-
-
-    ?>
-    <br>
-    <?php
-    $param = htmlspecialchars($_GET['post']);
     
-    $requetePost = "Select * FROM publication where photo = " . "'" . $param . "'" . ";";
+
+    $requetePost = "Select count(*) as nbCom FROM commentaire where publication = " . "'" . $param . "'" . ";";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
     while ($dataPost = $prequetePost->fetch()) {
 
-        $id = $dataPost['id'];
-        $photo = $dataPost['photo'];
-        $nom = $dataPost['user'];
-        $titre = $dataPost['titre'];
+        $nbCommentaire = $dataPost['nbCom'];
+    echo '
+    <div class="row">
+    <div class="col-md-10">nombre de commentaire : '.$nbCommentaire.'
     
-        if($_SESSION['login']==$nom){
-            echo '<div align=left><a href="stat.php?id='.$param.'">stat de la publication</a></div>';
-        }
+    ';
+
     }
+
+
+    $requetePost = "Select count(*) as nbLike FROM jaime where id = (Select id from publication where photo=" . "'" . $param . "'" . ");";
+    $prequetePost = $conn->prepare($requetePost);
+    $prequetePost->execute();
+    while ($dataPost = $prequetePost->fetch()) {
+        $nbLikePost = $dataPost['nbLike'];
+        echo'
+        
+        </div><br>
+            <div class="col-md-10">        nombre de like : '.$nbLikePost.'       </div>
+
+        ';
+    }
+
+
+        $requetePost = "Select * FROM publication where photo=" . "'" . $param . "'" . ";";
+        $prequetePost = $conn->prepare($requetePost);
+        $prequetePost->execute();
+        while ($dataPost = $prequetePost->fetch()) {
+            $nbVuePost = $dataPost['nbVue'];
+            echo '
+                <div class="col-md-10">        nombre de vue : '.$nbVuePost.'        </div>
+            </div>
+            ';
+        }
+    ?>
+    </div>
+    <br>
+
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div> 
+    <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+    </div>
+
+    
+    <br>
+    <?php
+    $param = htmlspecialchars($_GET['id']);
+        echo '<div align=left><a href="post.php?post='.$param.'">retour à la publication</a></div>';
+
     ?>
     <!--Fin Post-->
     <br>
