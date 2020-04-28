@@ -104,7 +104,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}],
 	data: [{
 		type: "pie",
-		yValueFormatString: "#,##0.00\"%\"",
+		yValueFormatString: "#,##0.00\"\"",
 		indexLabel: "{label} ({y})",
 		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
 	}]
@@ -122,8 +122,8 @@ var chart2 = new CanvasJS.Chart("chartContainer2", {
 		text: "2020"
 	}],
 	data: [{
-		type: "pie",
-		yValueFormatString: "#,##0.00\"%\"",
+		type: "column",
+		yValueFormatString: "#,##0.00\"\"",
 		indexLabel: "{label} ({y})",
 		dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
 	}]
@@ -136,14 +136,7 @@ chart2.render();
 
 </head>
 
-<?php
-//on incremente le nombre de vue
-    $param = htmlspecialchars($_GET['id']); //TODO
-    $requetePost = "update  publication set nbVue = nbVue +1 where photo = " . "'" . $param . "'" . ";";
-    $prequetePost = $conn->prepare($requetePost);
-    $prequetePost->execute();
 
-?>
 <!--Contenu-->
 
 
