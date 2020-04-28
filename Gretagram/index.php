@@ -79,14 +79,20 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                 </li>
 
             </ul>
+
+            <div class="md-form">
+            
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" id="search-user" placeholder="Rechercher">
+                <input class="form-control mr-sm-2 mdb-autocomplete" type="text" id="search-user" placeholder="Rechercher">
             </form>
-            <div style="margin-top: 20px">
-                <div id="result-search">
-                    <ul style="list-style: none;"></ul>
+                <div style="margin-top: 0px">
+                    <div id="result-search">
+                        <ul style="list-style: none;"></ul>
+                    </div>
                 </div>
+
             </div>
+
         </div>
     </nav>
     <!--Fin Nav-->
@@ -97,7 +103,9 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
         <?php
 
-        $requetePost = "Select * FROM publication order by datepubli DESC";
+        //$requetePost = "Select * FROM publication order by datepubli DESC";
+        $requetePost = "Select * FROM publication  where user in (Select nom_suivi from abonnement where userAbonn='".$_SESSION['login']."') or user='".$_SESSION['login']."' order by datepubli DESC";
+        //echo $requetePost;
         $prequetePost = $conn->prepare($requetePost);
         $prequetePost->execute();
         while ($dataPost = $prequetePost->fetch()) {
