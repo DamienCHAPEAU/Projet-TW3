@@ -80,10 +80,18 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
                         $nbVueAVG = $dataPost3['nbAVG'];
 
+                        $requetePost4 = "Select AVG(nbVue) as nbAVGtot FROM publication ;";
+                        $prequetePost4 = $conn->prepare($requetePost4);
+                        $prequetePost4->execute();
+                        while ($dataPost4 = $prequetePost4->fetch()) {
+                            $nbVueAVGtot = $dataPost4['nbAVGtot'];
+
                         $dataPoints2 = array( 
                         array("label"=>"Nombre de vue moyen sur vos publication", "y"=>$nbVueAVG),
+                        array("label"=>"Nombre de vue moyen des publication sur gretagram", "y"=>$nbVueAVGtot),
                         array("label"=>"Nombre de vue sur cette publication", "y"=>$nbVuePost)
                         );
+                    }
                     }
         }
         }
