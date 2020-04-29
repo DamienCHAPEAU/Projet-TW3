@@ -52,10 +52,10 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
 <?php
 //on incremente le nombre de vue
-    $param = htmlspecialchars($_GET['post']); //TODO
-    $requetePost = "update  publication set nbVue = nbVue +1 where photo = " . "'" . $param . "'" . ";";
-    $prequetePost = $conn->prepare($requetePost);
-    $prequetePost->execute();
+$param = htmlspecialchars($_GET['post']); //TODO
+$requetePost = "update  publication set nbVue = nbVue +1 where photo = " . "'" . $param . "'" . ";";
+$prequetePost = $conn->prepare($requetePost);
+$prequetePost->execute();
 
 ?>
 <!--Contenu-->
@@ -170,17 +170,28 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
             $like = $conn->prepare('SELECT id FROM jaime WHERE id_article= ?');
             $like->execute(array($id));
             $likes = $like->rowCount();
+
+            $check_like = $conn->prepare('SELECT id FROM jaime WHERE id_article = ? AND nom_personne= ?');
+            $check_like->execute(array($id, $_SESSION['login']));
+            
+            if ($check_like->rowCount() == 1) {
+                echo '<a href="script/like.php?id='.$id.' ?>&nom='.$_SESSION['login'].'">Je n\'aime plus</a>';
+            } else {
+                echo '<a href="script/like.php?id='.$id.' ?>&nom='.$_SESSION['login'].'">J\'aime</a>';
+            }
             ?>
 
-            <a href="script/like.php?id=<?php echo $id; ?>&nom=<?php echo $_SESSION['login']; ?>"><?php echo $likes ?> J'aime</a>
+            
         </div>
-        <div class="col-md-1"></div>
+        <div class="col-md-1">
+           <a><?php echo $likes ?> J'aime</a>
+        </div>
         <div class="col-md-7">
 
             <form method="post" enctype="multipart/form-data">
 
                 <div class="input-group mb-3">
-                    <textarea name="newComm" class="form-control" placeholder="Ajouter un commentaire" aria-label="Recipient'."'".' s username" aria-describedby="basic-addon2"></textarea>
+                    <textarea name="newComm" class="form-control" placeholder="Ajouter un commentaire"  aria-describedby="basic-addon2"></textarea>
                     <div class="input-group-append">
                         <input type="submit" class="btn btn-outline-secondary" name="submit_commentaire" value="Envoyer">
 
@@ -205,35 +216,9 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
         $newComm = $_POST['newComm'];
         $commSlash = addslashes($newComm);
 
-
         $sql = " INSERT INTO commentaire ( message, publication, user) VALUES ('" . $commSlash . "', '" . $publi . "', '" . $id . "') ;";
-        echo $sql;
-
-        $host = 'localhost';
-        $user = 'root';
-        $pass = '';
-        $dbname = 'DB_WEB';
-
-
-
-        $conn = new mysqli($host, $user, $pass, $dbname);
-
-
-
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-            echo "erreur";
-        }
-
-        if ($conn->query($sql) === TRUE) {
-
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        $conn->close();
+        //echo $sql;
+        $conn->query($sql);        
 
         echo '<meta http-equiv="refresh" content="0">';
     }
@@ -245,7 +230,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
     <br>
     <?php
     $param = htmlspecialchars($_GET['post']);
-    
+
     $requetePost = "Select * FROM publication where photo = " . "'" . $param . "'" . ";";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
@@ -255,9 +240,9 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
         $photo = $dataPost['photo'];
         $nom = $dataPost['user'];
         $titre = $dataPost['titre'];
-    
-        if($_SESSION['login']==$nom){
-            echo '<div align=left><a href="stat.php?id='.$param.'">stat de la publication</a></div>';
+
+        if ($_SESSION['login'] == $nom) {
+            echo '<div align=left><a href="stat.php?id=' . $param . '">stat de la publication</a></div>';
         }
     }
     ?>

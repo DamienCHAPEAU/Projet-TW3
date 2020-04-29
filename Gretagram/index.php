@@ -99,7 +99,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
     <br>
     <!--Post-->
     <div class="container">
-
+   
 
         <?php
 
@@ -108,6 +108,17 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
         //echo $requetePost;
         $prequetePost = $conn->prepare($requetePost);
         $prequetePost->execute();
+        if($prequetePost->rowCount()==0){
+            echo '<div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <p>Découvrer des utilisateurs dans <a href="http://gretagram/discover.php">Discover !</a></p>
+                        </div>
+                        <div class="col-md-1">
+                        </div>
+                    </div>';
+        }
         while ($dataPost = $prequetePost->fetch()) {
             $user = $dataPost['user'];
             $titre = $dataPost['titre'];
@@ -137,19 +148,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                                         <a href="post.php?post=' . $image . '"><img src="' . $image . '" width="100%" ></a>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-1">
-                                            <i class="fa fa-heart"></i>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <i class="fa fa-comment"> ' . $description . ' </i>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <i class="fa fa-share"></i>
-                                        </div>
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-3">
-                                            <a class="like">' . $nbLike . ' jaime</a>
-                                        </div>
+                                        <br>                                        
                                     </div>
                                 </div>
                                 <div class="col-md-2">

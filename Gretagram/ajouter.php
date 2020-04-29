@@ -227,11 +227,11 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
                         //echo '<p>La photo a bien été envoyée.</p>';
 
-                        echo '<div class="alert alert-warning" role="alert">
+                        echo '<div class="alert alert-success" role="alert">
             La photo a bien été envoyée.
               </div>';
 
-                        echo '<img src="' . $target_file . '">';
+                        //echo '<img src="' . $target_file . '">';
 
                         //echo'<p>'. $target_file .'<p>';
 
@@ -255,7 +255,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
 
                         $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated ) VALUES ('" . $titre . "', '" . $description . "', '" . $user . "',  '" . $photo . "', '" . $latitude . "', '" . $longitude . "', '" . $addressePost . "' ) ;";
-                        echo $sql ;
+                        //echo $sql ;
 
                         $host = 'localhost';
                         $user = 'root';
@@ -270,7 +270,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
                         if ($conn->query($sql) === TRUE) {
                             //echo "New record created successfully";
-                            echo '<div class="alert alert-warning" role="alert">
+                            echo '<div class="alert alert-success" role="alert">
                                             Publication mise en ligne avec succès
                                             </div>';
                         } else {

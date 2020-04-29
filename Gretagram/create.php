@@ -226,7 +226,7 @@ if(!empty($_POST['mdpU']) && !empty($_POST['nomU'])&& !empty($_POST['prenomU']) 
                             }
                             if ($conn->query($sql3) === TRUE) {
                                 //echo "New record created successfully";
-                                echo '<div class="alert alert-warning" role="alert">
+                                echo '<div class="alert alert-success" role="alert">
                                 Profil crée avec succès
                                 </div>' ;
                             } else {
