@@ -104,7 +104,8 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
         <?php
 
         //$requetePost = "Select * FROM publication order by datepubli DESC";
-        $requetePost = "Select * FROM publication  where user in (Select nom_suivi from abonnement where userAbonn='".$_SESSION['login']."') or user='".$_SESSION['login']."' order by datepubli DESC";
+        //$requetePost = "Select * FROM publication  where user in (Select nom_suivi from abonnement where userAbonn='".$_SESSION['login']."') or user='".$_SESSION['login']."' order by datepubli DESC";
+        $requetePost = "Select * FROM publication  where user in (Select nom_suivi from abonnement where userAbonn='".$_SESSION['login']."') order by datepubli DESC";
         //echo $requetePost;
         $prequetePost = $conn->prepare($requetePost);
         $prequetePost->execute();
