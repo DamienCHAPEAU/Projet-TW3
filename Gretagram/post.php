@@ -175,9 +175,9 @@ $prequetePost->execute();
             $check_like->execute(array($id, $_SESSION['login']));
             
             if ($check_like->rowCount() == 1) {
-                echo '<a href="script/like.php?id='.$id.' ?>&nom='.$_SESSION['login'].'">Je n\'aime plus</a>';
+                echo '<a href="script/like.php?id='.$id.'&nom='.$_SESSION['login'].'">Je n\'aime plus</a>';
             } else {
-                echo '<a href="script/like.php?id='.$id.' ?>&nom='.$_SESSION['login'].'">J\'aime</a>';
+                echo '<a href="script/like.php?id='.$id.'&nom='.$_SESSION['login'].'">J\'aime</a>';
             }
             ?>
 

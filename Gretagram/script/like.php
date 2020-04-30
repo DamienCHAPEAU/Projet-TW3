@@ -29,8 +29,9 @@ else {
 <?php
 include("../include/connect.inc.php");
 
-if(isset($_GET['id']) AND !empty ($_GET['id'])){
+if(isset($_GET['id']) AND !empty($_GET['id'])){
     $getid = $_GET['id'];
+    echo $getid;
     $nompersonne = $_SESSION['login'];
     echo $nompersonne;
     $check = $conn->prepare('SELECT id FROM publication WHERE id=?');
@@ -47,6 +48,7 @@ if(isset($_GET['id']) AND !empty ($_GET['id'])){
         else{
             $ins = $conn->prepare('INSERT INTO jaime (id_article, nom_personne) VALUES (?, ?)');
             $ins->execute(array($getid, $nompersonne));
+            echo "ok";
         }
 
         header('Location: '.$_SERVER['HTTP_REFERER']);

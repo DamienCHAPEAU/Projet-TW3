@@ -237,7 +237,7 @@ chart2.render();
     }
 
 
-    $requetePost = "Select count(*) as nbLike FROM jaime where id = (Select id from publication where photo=" . "'" . $param . "'" . ");";
+    $requetePost = "Select count(*) as nbLike FROM jaime where id_article = (Select id from publication where photo=" . "'" . $param . "'" . ");";
     $prequetePost = $conn->prepare($requetePost);
     $prequetePost->execute();
     while ($dataPost = $prequetePost->fetch()) {
