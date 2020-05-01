@@ -63,9 +63,9 @@
 .leaflet-control-search .search-button {
 	display:block;
 	float:left;
-	width:30px;
-	height:30px;	
-	background: url('../img/search-icon.png') no-repeat 4px 4px #fff;
+	width:26;
+	height:26px;	
+	background: url('../img/search-icon.png') no-repeat 3px 3px #fff;
 	border-radius:4px;
 }
 .leaflet-control-search .search-button:hover {
