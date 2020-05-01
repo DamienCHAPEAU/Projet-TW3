@@ -39,6 +39,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/L.Control.Locate.min.css" />
 
     <!--JS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -111,7 +112,8 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
     <div id="mapid" style="width: 100%; height: 75%; z-index: 10;"></div>
 
-    
+    <script src="script/L.Control.Locate.js" ></script>
+
     <script src="script/leaflet-search.js"></script>
 
     <script>
@@ -126,6 +128,9 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
             tileSize: 512,
             zoomOffset: -1
         }).addTo(mymap);
+
+        L.control.locate({
+    strings: {   title: "Show me where I am, yo!"    }}).addTo(mymap);
 
         mymap.addControl( new L.Control.Search({
 		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
