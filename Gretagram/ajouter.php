@@ -257,12 +257,8 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                         $longitude = $_POST["long"];
                         $addressePost = $_POST['addressForm'];
                         */
-
-
-
                         $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated, Tag ) VALUES ('" . $titre . "', '" . $description . "', '" . $user . "',  '" . $photo . "', '" . $latitude . "', '" . $longitude . "', '" . $addressePost . "','".$tag."' ) ;";
                         //echo $sql ;
-
                         $host = 'localhost';
                         $user = 'root';
                         $pass = '';
