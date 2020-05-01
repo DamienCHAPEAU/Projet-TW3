@@ -125,6 +125,11 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                     <br>
 
                     <br>
+                    Tags:
+                    <br>
+                    <input type="text" name="Tag" size="40" maxlength="20" placeholder="inserez un ou plusieurs tags  ex:  permaculture">
+                    <br>  
+                    <br>
                     <br>
                     Photo:
                     <br>
@@ -236,7 +241,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                         //echo'<p>'. $target_file .'<p>';
 
 
-                        if (empty($_POST["titre"]) || empty($_POST["description"])) {
+                        if (empty($_POST["titre"]) || empty($_POST["description"])|| empty($_POST['Tag'])) {
 
                             echo '<div class="alert alert-warning" role="alert">
                 tout les champs ne sont pas rempli
@@ -247,6 +252,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                         $user = $_SESSION["login"];
                         $description = $_POST["description"];
                         $photo = $target_file;
+                        $tag = $_POST['Tag'];
                         /*$latitude = $_POST["lat"];
                         $longitude = $_POST["long"];
                         $addressePost = $_POST['addressForm'];
@@ -254,7 +260,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
 
 
-                        $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated ) VALUES ('" . $titre . "', '" . $description . "', '" . $user . "',  '" . $photo . "', '" . $latitude . "', '" . $longitude . "', '" . $addressePost . "' ) ;";
+                        $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated, Tag ) VALUES ('" . $titre . "', '" . $description . "', '" . $user . "',  '" . $photo . "', '" . $latitude . "', '" . $longitude . "', '" . $addressePost . "','".$tag."' ) ;";
                         //echo $sql ;
 
                         $host = 'localhost';

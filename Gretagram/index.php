@@ -77,16 +77,15 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="carte.php">Carte</a>
                 </li>
-
             </ul>
 
-            <div class="md-form">
+            <div class="md-form" style="height:-10">
             
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2 mdb-autocomplete" type="text" id="search-user" placeholder="Rechercher">
+                <input class="form-control mr-sm-5 mdb-autocomplete" type="text" id="search-user" placeholder="Rechercher">
             </form>
-                <div style="margin-top: 0px">
-                    <div id="result-search">
+                <div style="margin-top: 10px">
+                    <div id="result-search" >
                         <ul style="list-style: none;"></ul>
                     </div>
                 </div>
@@ -156,8 +155,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                        </div>
+                        
                     </div>
                     <br>
                 ';
