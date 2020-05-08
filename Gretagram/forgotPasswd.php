@@ -55,7 +55,7 @@ session_start ();
                                     <br>
 
                                         <div class="row">
-                                            <p> Saisissez votre adresse mail pour recevoir un mail avec votre nouveau mot de passe.</p>
+                                            <p> Saisissez votre adresse mail pour obtenir un nouveau mot de passe temporaire.</p>
 											
 											<div class="col-md-10 ">
                                                 <div class="input-group mb-10">
