@@ -80,10 +80,10 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
             </ul>
             <div class="md-form">
-            
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2 mdb-autocomplete" type="text" id="search-user" placeholder="Rechercher">
-            </form>
+
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2 mdb-autocomplete" type="text" id="search-user" placeholder="Rechercher">
+                </form>
                 <div style="margin-top: 0px">
                     <div id="result-search">
                         <ul style="list-style: none;"></ul>
@@ -100,55 +100,56 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
         <!-- <form method="post"  enctype="multipart/form-data" ACTION="script/newPost.php"> -->
         <div class="row">
-            <div class="col-5">
+            <div class="col-6">
 
                 <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <div class="form-group">
+                        <br>
+                        Localisation:
+                        <br><br>
+                        <input type="text" class="form-control" disabled name="addressForm" size="40" maxlength="40" value="<?php if (isset($_POST['adrr'])) {
+                                                                                                                                echo $_POST['adrr'];
+                                                                                                                            } ?>">
+                        <hr>
 
-                    <br>
-                    Localisation:
-                    <br><br>
-                    <input type="text" disabled name="addressForm" size="40" maxlength="40" value="<?php if (isset($_POST['adrr'])) {
-                                                                                                        echo $_POST['adrr'];
-                                                                                                    } ?>">
-                    <hr>
 
+                        <br>
+                        Titre:
+                        <br>
+                        <input type="text" class="form-control" name="titre" size="20" maxlength="20">
+                        <br>
+                        <br>
+                        Description:
+                        <br>
+                        <input type="text" class="form-control" name="description" size="40" maxlength="40">
+                        <br>
 
-                    <br>
-                    Titre:
-                    <br>
-                    <input type="text" name="titre" size="20" maxlength="20">
-                    <br>
-                    <br>
-                    Description:
-                    <br>
-                    <input type="text" name="description" size="20" maxlength="20">
-                    <br>
-
-                    <br>
-                    Tags:
-                    <br>
-                    <input type="text" name="Tag" size="40" maxlength="20" placeholder="inserez un ou plusieurs tags  ex:  permaculture">
-                    <br>  
-                    <br>
-                    <br>
-                    Photo:
-                    <br>
-                    <input type="file" name="photo" accept="image/*">
-                    <br>
-                    <br>
-                    <input type="submit" name="general" value="Envoyer">
+                        <br>
+                        Tags:
+                        <br>
+                        <input type="text" class="form-control" name="Tag" size="40" maxlength="20" placeholder="inserez un ou plusieurs tags  ex:  permaculture">
+                        <br>
+                        <br>
+                        <br>
+                        Photo:
+                        <br>
+                        <input type="file" name="photo" accept="image/*">
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary" name="general">Envoyer</button>
+                    </div>
                 </form>
 
             </div>
-            <div class="mb-5">
+            <div class="col-6">
                 <br>
 
                 Recherchez votre localisation:
                 <br>
                 <br>
                 <form method="post" action="API.php">
-                    <input type="text" name="localisation" size="20" maxlength="20">
-                    <input type="submit" name="adresse" value="search">
+                    <input type="text" class="form-control" name="localisation" size="20" maxlength="20">
+                    <button type="submit" class="btn btn-primary" name="adresse">Rechercher</button>
                     <hr>
                 </form>
             </div>
@@ -169,7 +170,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
 
         if (isset($_POST['general'])) {
 
-           
+
             /* verif localisation
         if(!isset($_POST['addressForm'])){
             if(empty($_POST['addressForm'])){
@@ -241,7 +242,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                         //echo'<p>'. $target_file .'<p>';
 
 
-                        if (empty($_POST["titre"]) || empty($_POST["description"])|| empty($_POST['Tag'])) {
+                        if (empty($_POST["titre"]) || empty($_POST["description"]) || empty($_POST['Tag'])) {
 
                             echo '<div class="alert alert-warning" role="alert">
                 tout les champs ne sont pas rempli
@@ -257,7 +258,7 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                         $longitude = $_POST["long"];
                         $addressePost = $_POST['addressForm'];
                         */
-                        $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated, Tag ) VALUES ('" . $titre . "', '" . $description . "', '" . $user . "',  '" . $photo . "', '" . $latitude . "', '" . $longitude . "', '" . $addressePost . "','".$tag."' ) ;";
+                        $sql = " INSERT INTO publication ( titre, description, user, photo, lat, longitude, adrrFormated, Tag ) VALUES ('" . $titre . "', '" . $description . "', '" . $user . "',  '" . $photo . "', '" . $latitude . "', '" . $longitude . "', '" . $addressePost . "','" . $tag . "' ) ;";
                         //echo $sql ;
                         $host = 'localhost';
                         $user = 'root';
@@ -290,8 +291,6 @@ if (isset($_SESSION['login']) && isset($_SESSION['mdp'])) {
                                 Vous n' . "'" . 'avez pas importer d' . "'" . 'image
                                 
                                 </div>';
-                                
-                                
             }
         } else {
 

@@ -117,17 +117,21 @@ $prequetePost->execute();
         $photo = $dataPost['photo'];
         $nom = $dataPost['user'];
         $titre = $dataPost['titre'];
+        $description = $dataPost['description'];
 
         echo '
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-               <h4>' . $titre . ' by <a href="profil.php?nom=' . $nom . '" style="color:#34A200">@' . $nom . '</a></h4>
+               <h4>' . $titre . ' <a href="profil.php?nom=' . $nom . '" style="color:#34A200">@' . $nom . '</a></h4>
                 <hr style="width: 100%; color: black; height: 1px; background-color:black;">
 
                 <div class="row">
-                    <div class="col-md-5">
+                <div class="col-md-5">' . $description . '</div>                
+                </div>
+                <div class="row">
+                    <div class="col-md-5">                   
                         <img src="' . $photo . '" alt="" class=" img-thumbnail responsive">
                     </div>
                     
@@ -173,25 +177,25 @@ $prequetePost->execute();
 
             $check_like = $conn->prepare('SELECT id FROM jaime WHERE id_article = ? AND nom_personne= ?');
             $check_like->execute(array($id, $_SESSION['login']));
-            
+
             if ($check_like->rowCount() == 1) {
-                echo '<a href="script/like.php?id='.$id.'&nom='.$_SESSION['login'].'">Je n\'aime plus</a>';
+                echo '<a href="script/like.php?id=' . $id . '&nom=' . $_SESSION['login'] . '">Je n\'aime plus</a>';
             } else {
-                echo '<a href="script/like.php?id='.$id.'&nom='.$_SESSION['login'].'">J\'aime</a>';
+                echo '<a href="script/like.php?id=' . $id . '&nom=' . $_SESSION['login'] . '">J\'aime</a>';
             }
             ?>
 
-            
+
         </div>
         <div class="col-md-1">
-           <a><?php echo $likes ?> J'aime</a>
+            <a><?php echo $likes ?> J'aime</a>
         </div>
         <div class="col-md-7">
 
             <form method="post" enctype="multipart/form-data">
 
                 <div class="input-group mb-3">
-                    <textarea name="newComm" class="form-control" placeholder="Ajouter un commentaire"  aria-describedby="basic-addon2"></textarea>
+                    <textarea name="newComm" class="form-control" placeholder="Ajouter un commentaire" aria-describedby="basic-addon2"></textarea>
                     <div class="input-group-append">
                         <input type="submit" class="btn btn-outline-secondary" name="submit_commentaire" value="Envoyer">
 
@@ -218,7 +222,7 @@ $prequetePost->execute();
 
         $sql = " INSERT INTO commentaire ( message, publication, user) VALUES ('" . $commSlash . "', '" . $publi . "', '" . $id . "') ;";
         //echo $sql;
-        $conn->query($sql);        
+        $conn->query($sql);
 
         echo '<meta http-equiv="refresh" content="0">';
     }
